@@ -72,7 +72,7 @@
                                     <Image url="@../../images/Icons/icons8-male-user-50.png" />
                                  </image>
                               </ImageView>
-                              <Label prefHeight="101.0" prefWidth="491.0" text="Profile" textFill="WHITE">
+                              <Label fx:id="profileName" prefHeight="101.0" prefWidth="491.0" text="Profile" textFill="WHITE">
                                  <font>
                                     <Font size="33.0" />
                                  </font>

@@ -1,15 +1,21 @@
 package com.demo;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.TextField;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
 import java.util.ResourceBundle;
 
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
 
 public class LoginController implements Initializable
 {
@@ -43,6 +49,23 @@ public class LoginController implements Initializable
     boolean bUserNameExists = false;
     boolean bPasswordExists = false;
 
+    Connection connection;
+    Statement statement;
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        final String urll = "jdbc:mysql://localhost:3306/gameshop";
+        final String username = "root";
+        final String password = "";
+        try
+        {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            connection = DriverManager.getConnection(urll,username,password);
+            statement = connection.createStatement();
+        } catch (ClassNotFoundException | SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     @FXML
     void Register(MouseEvent event)
     {
@@ -51,8 +74,7 @@ public class LoginController implements Initializable
     }
 
     @FXML
-    void login(MouseEvent event) throws SQLException, ClassNotFoundException
-    {
+    void login(MouseEvent event) throws SQLException, ClassNotFoundException, IOException {
         final String urll = "jdbc:mysql://localhost:3306/gameshop";
         final String usernamee = "root";
         final String passwordd = "";
@@ -82,8 +104,16 @@ public class LoginController implements Initializable
             if(usernamePasswordResult.getInt(3) == stringPasswordToIntPassword &&
                 usernamePasswordResult.getString(2).equals(username.getText()))
             {
-                System.out.println("Hebele hubele");
                 conn.close();
+                FXMLLoader loader = new FXMLLoader();
+                loader.setLocation(getClass().getResource("hello-view.fxml"));
+                Parent root = loader.load();
+                HelloController controller = loader.getController();
+                controller.SetHelloControllerData(username.getText());
+                Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+                Scene scene = new Scene(root);
+                stage.setScene(scene);
+                stage.show();
                 return;
             }
         }
@@ -141,20 +171,5 @@ public class LoginController implements Initializable
         return true;
     }
 
-    Connection connection;
-    Statement statement;
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        final String urll = "jdbc:mysql://localhost:3306/gameshop";
-        final String username = "root";
-        final String password = "";
-        try
-        {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            connection = DriverManager.getConnection(urll,username,password);
-            statement = connection.createStatement();
-        } catch (ClassNotFoundException | SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
+
 }

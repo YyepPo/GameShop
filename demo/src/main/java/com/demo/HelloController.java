@@ -24,6 +24,9 @@ public class HelloController implements Initializable {
     @FXML
     private Label gameCardNumber;
 
+    @FXML
+    private Label profileName;
+
     private List<BaseGame> games;
 
     private static int gameCounter = 0;
@@ -63,6 +66,11 @@ public class HelloController implements Initializable {
 
     }
 
+    public void SetHelloControllerData(String name)
+    {
+        profileName.setText(name);
+    }
+
     final String urll = "jdbc:mysql://localhost:3306/gameshop";
     final String username = "root";
     final String password = "";
@@ -80,10 +88,6 @@ public class HelloController implements Initializable {
             throw new RuntimeException(e);
         }
     }
-
-
-
-
         private List<BaseGame> GetGames()
     {
         List<BaseGame> baseGames = new ArrayList<BaseGame>();
