@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="800.0" prefWidth="1400.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.demo.ProductController">
+   <children>
+      <BorderPane prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <left>
+            <VBox prefHeight="800.0" prefWidth="300.0" BorderPane.alignment="CENTER">
+               <children>
+                  <HBox prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: grey;">
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                  </HBox>
+                  <HBox layoutX="10.0" layoutY="10.0" prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: grey;" />
+                  <HBox layoutX="10.0" layoutY="110.0" prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: grey;" />
+               </children>
+            </VBox>
+         </left>
+         <center>
+            <Pane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+               <children>
+                  <VBox layoutY="-2.0" prefHeight="78.0" prefWidth="1100.0">
+                     <children>
+                        <Label fx:id="name" prefHeight="153.0" prefWidth="1105.0" text="Game Name">
+                           <font>
+                              <Font name="System Bold" size="31.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets left="10.0" />
+                           </VBox.margin>
+                        </Label>
+                        <Label fx:id="test" layoutX="20.0" layoutY="10.0" prefHeight="153.0" prefWidth="1105.0" text="Game Name">
+                           <font>
+                              <Font name="System Bold" size="31.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </VBox>
+                  <ScrollPane layoutX="1.0" layoutY="82.0" prefHeight="720.0" prefWidth="1100.0">
+                     <content>
+                        <Pane nodeOrientation="LEFT_TO_RIGHT" prefHeight="400.0" prefWidth="1027.0" translateX="30.0">
+                           <children>
+                              <Pane layoutX="269.0" layoutY="9.0" prefHeight="390.0" prefWidth="392.0" style="-fx-background-color: grey; -fx-background-radius: 20;">
+                                 <children>
+                                    <VBox layoutX="16.0" prefHeight="247.0" prefWidth="375.0">
+                                       <children>
+                                          <HBox prefHeight="109.0" prefWidth="377.0">
+                                             <children>
+                                                <Label prefHeight="122.0" prefWidth="175.0" text="Realase Date:">
+                                                   <font>
+                                                      <Font size="23.0" />
+                                                   </font>
+                                                   <HBox.margin>
+                                                      <Insets left="10.0" />
+                                                   </HBox.margin>
+                                                </Label>
+                                                <Label fx:id="release" alignment="CENTER_RIGHT" layoutX="10.0" layoutY="10.0" prefHeight="122.0" prefWidth="175.0" text="Nov 19,2021">
+                                                   <font>
+                                                      <Font size="23.0" />
+                                                   </font>
+                                                </Label>
+                                             </children>
+                                             <VBox.margin>
+                                                <Insets top="20.0" />
+                                             </VBox.margin>
+                                          </HBox>
+                                          <Line endX="874.7525024414062" endY="-7.53791618347168" layoutX="-516.0" layoutY="256.0" startX="1196.04541015625" startY="-7.537915229797363">
+                                             <VBox.margin>
+                                                <Insets left="20.0" />
+                                             </VBox.margin>
+                                          </Line>
+                                          <HBox layoutX="10.0" layoutY="10.0" prefHeight="109.0" prefWidth="377.0">
+                                             <children>
+                                                <Label prefHeight="122.0" prefWidth="175.0" text="Price">
+                                                   <font>
+                                                      <Font size="23.0" />
+                                                   </font>
+                                                   <HBox.margin>
+                                                      <Insets left="10.0" />
+                                                   </HBox.margin>
+                                                </Label>
+                                                <Label fx:id="price" alignment="CENTER_RIGHT" layoutX="10.0" layoutY="10.0" prefHeight="122.0" prefWidth="175.0" text="99.99$">
+                                                   <font>
+                                                      <Font size="23.0" />
+                                                   </font>
+                                                </Label>
+                                             </children>
+                                          </HBox>
+                                          <Line endX="874.7525024414062" endY="-7.53791618347168" startX="546.7929077148438" startY="-7.537932395935059">
+                                             <VBox.margin>
+                                                <Insets left="20.0" />
+                                             </VBox.margin>
+                                          </Line>
+                                       </children>
+                                    </VBox>
+                                    <Button layoutX="233.0" layoutY="288.0" mnemonicParsing="false" onMousePressed="#buy" prefHeight="51.0" prefWidth="154.0" style="-fx-background-color: lightblue;" text="Buy" />
+                                 </children>
+                              </Pane>
+                              <Pane prefHeight="405.0" prefWidth="288.0">
+                                 <children>
+                                    <Pane layoutY="5.0" prefHeight="388.0" prefWidth="286.0">
+                                       <children>
+                                          <ImageView fx:id="img" fitHeight="404.0" fitWidth="287.0" pickOnBounds="true">
+                                             <image>
+                                                <Image url="@../../images/Icons/Apex_legends_cover.jpg" />
+                                             </image>
+                                          </ImageView>
+                                       </children>
+                                    </Pane>
+                                 </children>
+                              </Pane>
+                              <Pane layoutX="698.0" layoutY="12.0" prefHeight="389.0" prefWidth="313.0" style="-fx-background-color: grey; -fx-background-radius: 20;" />
+                           </children>
+                        </Pane>
+                     </content>
+                  </ScrollPane>
+               </children>
+            </Pane>
+         </center>
+      </BorderPane>
+   </children>
+</AnchorPane>
