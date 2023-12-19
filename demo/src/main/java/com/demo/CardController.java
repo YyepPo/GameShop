@@ -49,10 +49,8 @@ public class CardController {
 
         root = load.load();
 
-        int a = User.GetAmount();
-
         ProductController productController = load.getController();
-        productController.InitializeData(Integer.toString(a),gameImg.getImage(),gameName.getText(),gamePrice.getText(),gameReleaseDate);
+        //productController.InitializeData(Integer.toString(a),gameImg.getImage(),gameName.getText(),gamePrice.getText(),gameReleaseDate);
 
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);

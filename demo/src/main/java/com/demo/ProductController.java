@@ -27,19 +27,20 @@ public class ProductController implements Initializable {
     @FXML
     private Label test;
 
+    @FXML
+    private Label profileName;
+
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle)
     {
-
+        profileName.setText(User.getUserName());
     }
 
-    public void InitializeData(String test,Image image,String name,String price,String releaseDate)
+    private User user;
+    public void InitializeData(User user)
     {
-        img.setImage(image);
-        this.name.setText(name);
-        this.price.setText(price);
-        release.setText(releaseDate);
-        this.test.setText(test);
+        this.user = user;
     }
 
     @FXML

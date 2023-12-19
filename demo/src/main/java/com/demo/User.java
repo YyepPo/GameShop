@@ -2,37 +2,37 @@ package com.demo;
 
 public class User {
 
-    private String userName;
-    private String userSurname;
-    private String nickname;
-    private int age;
+    private static String userName;
+    private static String userSurname;
+    private static String nickname;
+    private static int age;
 
     private static int amount = 100;
 
     public User(String userName, String userSurname, String nickname, int age) {
-        this.userName = userName;
-        this.userSurname = userSurname;
-        this.nickname = nickname;
-        this.age = age;
+        userName = userName;
+        userSurname = userSurname;
+        nickname = nickname;
+        age = age;
     }
 
     public User(){}
 
-    public final String getUserName() {return userName;}
+    public static String getUserName() {return userName;}
 
-    public final String getUserSurname() {return userSurname;}
+    public static String getUserSurname() {return userSurname;}
 
-    public String getNickname() {return nickname;}
+    public static String getNickname() {return nickname;}
 
-    public int getAge() {return age;}
+    public static int getAge() {return age;}
 
     public static int GetAmount() {return amount;}
     public static void Test(int b) {amount -= b;}
-    public void setUserName(String userName) {this.userName = userName;}
+    public static void setUserName(String newUserName) {userName = newUserName;}
 
-    public void setUserSurname(String userSurname) {this.userSurname = userSurname;}
+    public static void setUserSurname(String newUserSurname) {userName = newUserSurname;}
 
-    public void setNickname(String nickname) {this.nickname = nickname;}
+    public static void setNickname(String newNickname) {nickname = newNickname;}
 
-    public void setAge(int age) {this.age = age;}
+    public static void setAge(int newAge) {age = newAge;}
 }

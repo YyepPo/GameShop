@@ -21,9 +21,9 @@
          <left>
             <VBox prefHeight="800.0" prefWidth="300.0" style="-fx-background-color: grey;" BorderPane.alignment="CENTER">
                <children>
-                  <Button id="#no-colorr" mnemonicParsing="false" prefHeight="100.0" prefWidth="318.0" style="-fx-background-color: nocolor;" stylesheets="@style.css" textFill="#ffffff00">
+                  <Button id="#no-colorr" fx:id="homeButton" mnemonicParsing="false" onMousePressed="#OnHomeButtonPressed" prefHeight="100.0" prefWidth="318.0" style="-fx-background-color: grey;" stylesheets="@style.css" textFill="#ffffff00">
                      <graphic>
-                        <HBox prefHeight="213.0" prefWidth="284.0" style="-fx-background-color: grey;">
+                        <HBox fx:id="homeHBox" prefHeight="92.0" prefWidth="317.0" style="-fx-background-color: grey;">
                            <children>
                               <ImageView fitHeight="60.0" fitWidth="65.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" translateX="10.0" translateY="20.0">
                                  <image>
@@ -42,30 +42,9 @@
                         </HBox>
                      </graphic>
                   </Button>
-                  <Button id="#no-colorr" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" prefHeight="100.0" prefWidth="318.0" style="-fx-background-color: nocolor;" stylesheets="@style.css" textFill="#ffffff00">
+                  <Button id="#no-colorr" fx:id="profileButton" layoutX="10.0" layoutY="110.0" mnemonicParsing="false" onMousePressed="#OnProfileButtonPressed" prefHeight="100.0" prefWidth="318.0" style="-fx-background-color: nocolor;" stylesheets="@style.css" textFill="#ffffff00">
                      <graphic>
-                        <HBox prefHeight="213.0" prefWidth="284.0" style="-fx-background-color: grey;">
-                           <children>
-                              <ImageView fitHeight="60.0" fitWidth="65.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" translateX="10.0" translateY="20.0">
-                                 <image>
-                                    <Image url="@../../images/Icons/icons8-check-all-100.png" />
-                                 </image>
-                              </ImageView>
-                              <Label prefHeight="101.0" prefWidth="491.0" text="Browse" textFill="WHITE">
-                                 <font>
-                                    <Font size="33.0" />
-                                 </font>
-                                 <HBox.margin>
-                                    <Insets left="20.0" />
-                                 </HBox.margin>
-                              </Label>
-                           </children>
-                        </HBox>
-                     </graphic>
-                  </Button>
-                  <Button id="#no-colorr" layoutX="10.0" layoutY="110.0" mnemonicParsing="false" prefHeight="100.0" prefWidth="318.0" style="-fx-background-color: nocolor;" stylesheets="@style.css" textFill="#ffffff00">
-                     <graphic>
-                        <HBox prefHeight="213.0" prefWidth="284.0" style="-fx-background-color: grey;">
+                        <HBox fx:id="profileHBox" prefHeight="213.0" prefWidth="284.0" style="-fx-background-color: grey;">
                            <children>
                               <ImageView fitHeight="60.0" fitWidth="65.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" translateX="10.0" translateY="20.0">
                                  <image>
@@ -110,9 +89,9 @@
                            </children>
                         </VBox>
                      </children></VBox>
-                  <ScrollPane layoutX="-2.0" layoutY="193.0" prefHeight="606.0" prefWidth="1104.0">
+                  <ScrollPane layoutX="-2.0" layoutY="193.0" prefHeight="606.0" prefWidth="1104.0" vbarPolicy="ALWAYS">
                      <content>
-                        <GridPane fx:id="gameGrid" prefHeight="0.0" prefWidth="2.0">
+                        <GridPane fx:id="gameGrid" prefHeight="0.0" prefWidth="0.0">
                           <rowConstraints>
                             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                           </rowConstraints>

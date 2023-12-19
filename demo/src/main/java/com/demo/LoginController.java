@@ -105,18 +105,25 @@ public class LoginController implements Initializable
                 usernamePasswordResult.getString(2).equals(username.getText()))
             {
                 conn.close();
+                User.setUserName(username.getText());
+
                 FXMLLoader loader = new FXMLLoader();
                 loader.setLocation(getClass().getResource("hello-view.fxml"));
                 Parent root = loader.load();
+
                 HelloController controller = loader.getController();
-                controller.SetHelloControllerData(username.getText());
-                Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+                controller.SetHelloControllerData();
+                Stage stage = (Stage)((Node) event.getSource()).getScene().getWindow();
                 Scene scene = new Scene(root);
                 stage.setScene(scene);
                 stage.show();
                 return;
             }
         }
+    }
+
+    private void LoadHelloViewScene(MouseEvent event) throws IOException {
+
     }
 
     @FXML
@@ -128,8 +135,8 @@ public class LoginController implements Initializable
         final String lastName = registerLastName.getText();
 
         System.out.println(username+" "+password+" "+email+" "+ firstName +" "+ lastName);
-
-        String query = " insert into user (username, password, email, fistName, lsatName)"
+    
+        String query = " insert into user (username, password, email, firstName, lastName)"
                 + " values (?, ?, ?, ?, ?)";
 
         PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -140,6 +147,9 @@ public class LoginController implements Initializable
         preparedStatement.setString(5,lastName);
         preparedStatement.executeUpdate();
         connection.close();
+
+        User.setUserName(username);
+
         registerPane.setVisible(false);
         loginPane.setVisible(true);
     }
@@ -149,27 +159,21 @@ public class LoginController implements Initializable
         return bUserNameExists && bPasswordExists;
     }
 
-    private boolean AreInputFieldsValid()
-    {
-        if(username.getText().isEmpty() && password.getText().isEmpty())
-        {
+    private boolean AreInputFieldsValid() {
+        if (username.getText().isEmpty() && password.getText().isEmpty()) {
             System.out.println("Fill both fields");
             return false;
         }
 
-        if(username.getText().isEmpty())
-        {
+        if (username.getText().isEmpty()) {
             System.out.println("Fill username");
             return false;
         }
 
-        if(password.getText().isEmpty())
-        {
+        if (password.getText().isEmpty()) {
             System.out.println("Fill password");
             return false;
         }
         return true;
     }
-
-
 }
