@@ -1,0 +1,15 @@
+@font-face
+{
+    font-family: "Jura";
+    src: url('JuraBook.ttf');
+}
+
+.text
+{
+    -fx-font-family: "Jura";
+}
+
+.scroll-pane {
+    -fx-background: #27334B;
+    -fx-border-color: #27334B;
+}

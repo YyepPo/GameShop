@@ -98,12 +98,18 @@ public class LoginController implements Initializable
         String a = password.getText();
         int stringPasswordToIntPassword = Integer.parseInt(a);
         ResultSet usernamePasswordResult = st.executeQuery("select * from user where username ="+"'"+username.getText()+"' and password="+stringPasswordToIntPassword);
-
         while(usernamePasswordResult.next())
         {
             if(usernamePasswordResult.getInt(3) == stringPasswordToIntPassword &&
                 usernamePasswordResult.getString(2).equals(username.getText()))
             {
+                ResultSet set = statement.executeQuery("select user_ID from user where username="+"'"+username.getText()+"'");
+                while(set.next())
+                {
+                    User.SetUserID(set.getInt(1));
+                    System.out.println(set.getInt(1));
+                    break;
+                }
                 conn.close();
                 User.setUserName(username.getText());
 
@@ -117,7 +123,7 @@ public class LoginController implements Initializable
                 Scene scene = new Scene(root);
                 stage.setScene(scene);
                 stage.show();
-                return;
+                break;
             }
         }
     }

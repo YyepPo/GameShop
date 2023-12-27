@@ -21,10 +21,10 @@ public class VideoGame extends  BaseGame{
     private int ageRestriction;
     SystemRequirement systemRequirement = new SystemRequirement();
 
-    public VideoGame(String name, String gameImg, String gameDesc, double gamePrice, E_GameType gameType, ArrayList<String> screenShots,
+    public VideoGame(int gameID,String name, String gameImg, String gameDesc, double gamePrice, String gameType, ArrayList<String> screenShots,
                      int ageRestriction, String operationSystem, String processor, int memory, String graphicsCard, int storage,String gameReleaseDate
                      ) {
-        super(name, gameImg, gameDesc, gamePrice, gameType, screenShots, gameReleaseDate);
+        super(gameID,name, gameImg, gameDesc, gamePrice, gameType, screenShots, gameReleaseDate);
         this.ageRestriction = ageRestriction;
 
         systemRequirement.operationSystem = operationSystem;

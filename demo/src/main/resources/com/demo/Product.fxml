@@ -14,69 +14,64 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="800.0" prefWidth="1400.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.demo.ProductController">
+<AnchorPane prefHeight="800.0" prefWidth="1642.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.demo.ProductController">
    <children>
       <BorderPane prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <left>
-            <VBox prefHeight="800.0" prefWidth="300.0" style="-fx-background-color: grey;" BorderPane.alignment="CENTER">
+            <VBox prefHeight="800.0" prefWidth="466.0" style="-fx-background-color: #212F4B;" BorderPane.alignment="CENTER">
                <children>
-                  <Button id="#no-colorr" mnemonicParsing="false" prefHeight="100.0" prefWidth="318.0" style="-fx-background-color: nocolor;" stylesheets="@style.css" textFill="#ffffff00">
+                  <Button id="#no-colorr" fx:id="homeButton" mnemonicParsing="false" onMousePressed="#OnHomeButtonPressed" prefHeight="146.0" prefWidth="451.0" style="-fx-background-color: #212F4B;" stylesheets="@style.css" textFill="#ffffff00">
                      <graphic>
-                        <HBox prefHeight="213.0" prefWidth="284.0" style="-fx-background-color: grey;">
+                        <HBox fx:id="homeHBox" prefHeight="138.0" prefWidth="412.0" style="-fx-background-color: #212F4B;">
                            <children>
-                              <ImageView fitHeight="60.0" fitWidth="65.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" translateX="10.0" translateY="20.0">
+                              <Line fx:id="homeLine" endX="100.0" startX="100.0" startY="133.0" stroke="WHITE" strokeWidth="5.0" visible="false">
+                                 <HBox.margin>
+                                    <Insets left="-5.0" />
+                                 </HBox.margin>
+                              </Line>
+                              <ImageView fitHeight="72.0" fitWidth="72.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" translateX="35.0" translateY="35.0">
                                  <image>
-                                    <Image url="@../../images/Icons/home_10333179.png" />
+                                    <Image url="@../../images/Icons/icons8-home-page-96.png" />
                                  </image>
+                                 <HBox.margin>
+                                    <Insets />
+                                 </HBox.margin>
                               </ImageView>
-                              <Label prefHeight="101.0" prefWidth="491.0" text="Home" textFill="WHITE">
+                              <Label prefHeight="165.0" prefWidth="213.0" style="-fx-font: Jura;" styleClass="text" stylesheets="@style.css" text="Home" textFill="WHITE">
                                  <font>
-                                    <Font size="33.0" />
+                                    <Font size="50.0" />
                                  </font>
                                  <HBox.margin>
-                                    <Insets left="20.0" />
+                                    <Insets left="50.0" top="20.0" />
                                  </HBox.margin>
                               </Label>
                            </children>
                         </HBox>
                      </graphic>
                   </Button>
-                  <Button id="#no-colorr" mnemonicParsing="false" prefHeight="100.0" prefWidth="318.0" style="-fx-background-color: nocolor;" stylesheets="@style.css" textFill="#ffffff00">
+                  <Button id="#no-colorr" fx:id="profileButton" mnemonicParsing="false" onMousePressed="#OnHomeButtonPressed" prefHeight="146.0" prefWidth="455.0" style="-fx-background-color: #212F4B;" stylesheets="@style.css" textFill="#ffffff00">
                      <graphic>
-                        <HBox prefHeight="213.0" prefWidth="284.0" style="-fx-background-color: grey;">
+                        <HBox fx:id="profileHBox" prefHeight="92.0" prefWidth="317.0" style="-fx-background-color: #212F4B;">
                            <children>
-                              <ImageView fitHeight="60.0" fitWidth="65.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" translateX="10.0" translateY="20.0">
-                                 <image>
-                                    <Image url="@../../images/Icons/icons8-check-all-100.png" />
-                                 </image>
-                              </ImageView>
-                              <Label prefHeight="101.0" prefWidth="491.0" text="Browse" textFill="WHITE">
-                                 <font>
-                                    <Font size="33.0" />
-                                 </font>
+                              <Line fx:id="profileLine" endX="100.0" startX="100.0" startY="133.0" stroke="WHITE" strokeWidth="5.0" visible="false">
                                  <HBox.margin>
-                                    <Insets left="20.0" />
+                                    <Insets left="-5.0" />
                                  </HBox.margin>
-                              </Label>
-                           </children>
-                        </HBox>
-                     </graphic>
-                  </Button>
-                  <Button id="#no-colorr" mnemonicParsing="false" prefHeight="100.0" prefWidth="318.0" style="-fx-background-color: nocolor;" stylesheets="@style.css" textFill="#ffffff00">
-                     <graphic>
-                        <HBox prefHeight="213.0" prefWidth="284.0" style="-fx-background-color: grey;">
-                           <children>
-                              <ImageView fitHeight="60.0" fitWidth="65.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" translateX="10.0" translateY="20.0">
+                              </Line>
+                              <ImageView fitHeight="72.0" fitWidth="72.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" translateX="35.0" translateY="35.0">
                                  <image>
-                                    <Image url="@../../images/Icons/icons8-male-user-50.png" />
+                                    <Image url="@../../images/Icons/icons8-user-menu-male-100.png" />
                                  </image>
+                                 <HBox.margin>
+                                    <Insets />
+                                 </HBox.margin>
                               </ImageView>
-                              <Label fx:id="profileName" prefHeight="101.0" prefWidth="491.0" text="Profile" textFill="WHITE">
+                              <Label prefHeight="165.0" prefWidth="213.0" style="-fx-font: Jura;" styleClass="text" stylesheets="@style.css" text="Profile" textFill="WHITE">
                                  <font>
-                                    <Font size="33.0" />
+                                    <Font size="53.0" />
                                  </font>
                                  <HBox.margin>
-                                    <Insets left="20.0" />
+                                    <Insets left="50.0" top="20.0" />
                                  </HBox.margin>
                               </Label>
                            </children>
@@ -89,104 +84,156 @@
          <center>
             <Pane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                <children>
-                  <VBox layoutY="-2.0" prefHeight="78.0" prefWidth="1100.0">
+                  <VBox layoutY="-2.0" prefHeight="200.0" prefWidth="1178.0" styleClass="scroll-pane" stylesheets="@style.css">
                      <children>
-                        <Label fx:id="name" prefHeight="153.0" prefWidth="1105.0" text="Game Name">
+                        <Label fx:id="gameName" prefHeight="118.0" prefWidth="1149.0" styleClass="text" stylesheets="@style.css" text="Game Name" textFill="WHITE">
                            <font>
-                              <Font name="System Bold" size="31.0" />
-                           </font>
-                           <VBox.margin>
-                              <Insets left="10.0" />
-                           </VBox.margin>
-                        </Label>
-                        <Label fx:id="test" layoutX="20.0" layoutY="10.0" prefHeight="153.0" prefWidth="1105.0" text="Game Name">
-                           <font>
-                              <Font name="System Bold" size="31.0" />
+                              <Font size="50.0" />
                            </font>
                         </Label>
+                        <Line endX="1237.666748046875" startX="2386.166748046875" stroke="WHITE" />
                      </children>
+                     <padding>
+                        <Insets left="20.0" />
+                     </padding>
                   </VBox>
-                  <ScrollPane layoutX="-4.0" layoutY="82.0" prefHeight="720.0" prefWidth="1110.0">
+                  <ScrollPane layoutX="-1.0" layoutY="192.0" prefHeight="612.0" prefWidth="1177.0" stylesheets="@style.css">
                      <content>
-                        <Pane nodeOrientation="LEFT_TO_RIGHT" prefHeight="400.0" prefWidth="1027.0" translateX="30.0">
+                        <AnchorPane prefHeight="1235.0" prefWidth="1134.0">
                            <children>
-                              <Pane layoutX="269.0" layoutY="9.0" prefHeight="390.0" prefWidth="392.0" style="-fx-background-color: grey; -fx-background-radius: 20;">
+                              <Pane nodeOrientation="LEFT_TO_RIGHT" prefHeight="416.0" prefWidth="1127.0" translateX="30.0">
                                  <children>
-                                    <VBox layoutX="16.0" prefHeight="247.0" prefWidth="375.0">
+                                    <Pane layoutX="269.0" layoutY="9.0" prefHeight="390.0" prefWidth="392.0" style="-fx-background-color: grey; -fx-background-radius: 20; -fx-background-color: #344464;">
                                        <children>
-                                          <HBox prefHeight="109.0" prefWidth="377.0">
+                                          <VBox layoutX="16.0" prefHeight="247.0" prefWidth="375.0">
                                              <children>
-                                                <Label prefHeight="122.0" prefWidth="175.0" text="Realase Date:">
-                                                   <font>
-                                                      <Font size="23.0" />
-                                                   </font>
-                                                   <HBox.margin>
-                                                      <Insets left="10.0" />
-                                                   </HBox.margin>
-                                                </Label>
-                                                <Label fx:id="release" alignment="CENTER_RIGHT" layoutX="10.0" layoutY="10.0" prefHeight="122.0" prefWidth="175.0" text="Nov 19,2021">
-                                                   <font>
-                                                      <Font size="23.0" />
-                                                   </font>
-                                                </Label>
+                                                <HBox prefHeight="109.0" prefWidth="377.0">
+                                                   <children>
+                                                      <Label prefHeight="122.0" prefWidth="175.0" styleClass="text" stylesheets="@style.css" text="Realase Date:">
+                                                         <font>
+                                                            <Font size="23.0" />
+                                                         </font>
+                                                         <HBox.margin>
+                                                            <Insets left="10.0" />
+                                                         </HBox.margin>
+                                                      </Label>
+                                                      <Label fx:id="release" alignment="CENTER_RIGHT" layoutX="10.0" layoutY="10.0" prefHeight="122.0" prefWidth="175.0" styleClass="text" stylesheets="@style.css" text="Nov 19,2021">
+                                                         <font>
+                                                            <Font size="23.0" />
+                                                         </font>
+                                                      </Label>
+                                                   </children>
+                                                   <VBox.margin>
+                                                      <Insets top="20.0" />
+                                                   </VBox.margin>
+                                                </HBox>
+                                                <Line endX="874.7525024414062" endY="-7.53791618347168" layoutX="-516.0" layoutY="256.0" startX="1196.04541015625" startY="-7.537915229797363" stroke="WHITE">
+                                                   <VBox.margin>
+                                                      <Insets left="20.0" />
+                                                   </VBox.margin>
+                                                </Line>
+                                                <HBox layoutX="10.0" layoutY="10.0" prefHeight="109.0" prefWidth="377.0">
+                                                   <children>
+                                                      <Label prefHeight="122.0" prefWidth="175.0" styleClass="text" stylesheets="@style.css" text="Price">
+                                                         <font>
+                                                            <Font size="23.0" />
+                                                         </font>
+                                                         <HBox.margin>
+                                                            <Insets left="10.0" />
+                                                         </HBox.margin>
+                                                      </Label>
+                                                      <Label fx:id="price" alignment="CENTER_RIGHT" layoutX="10.0" layoutY="10.0" prefHeight="122.0" prefWidth="175.0" styleClass="text" stylesheets="@style.css" text="99.99$">
+                                                         <font>
+                                                            <Font size="23.0" />
+                                                         </font>
+                                                      </Label>
+                                                   </children>
+                                                </HBox>
+                                                <Line endX="874.7525024414062" endY="-7.53791618347168" startX="546.7929077148438" startY="-7.537932395935059" stroke="WHITE">
+                                                   <VBox.margin>
+                                                      <Insets left="20.0" />
+                                                   </VBox.margin>
+                                                </Line>
                                              </children>
-                                             <VBox.margin>
-                                                <Insets top="20.0" />
-                                             </VBox.margin>
-                                          </HBox>
-                                          <Line endX="874.7525024414062" endY="-7.53791618347168" layoutX="-516.0" layoutY="256.0" startX="1196.04541015625" startY="-7.537915229797363">
-                                             <VBox.margin>
-                                                <Insets left="20.0" />
-                                             </VBox.margin>
-                                          </Line>
-                                          <HBox layoutX="10.0" layoutY="10.0" prefHeight="109.0" prefWidth="377.0">
-                                             <children>
-                                                <Label prefHeight="122.0" prefWidth="175.0" text="Price">
-                                                   <font>
-                                                      <Font size="23.0" />
-                                                   </font>
-                                                   <HBox.margin>
-                                                      <Insets left="10.0" />
-                                                   </HBox.margin>
-                                                </Label>
-                                                <Label fx:id="price" alignment="CENTER_RIGHT" layoutX="10.0" layoutY="10.0" prefHeight="122.0" prefWidth="175.0" text="99.99$">
-                                                   <font>
-                                                      <Font size="23.0" />
-                                                   </font>
-                                                </Label>
-                                             </children>
-                                          </HBox>
-                                          <Line endX="874.7525024414062" endY="-7.53791618347168" startX="546.7929077148438" startY="-7.537932395935059">
-                                             <VBox.margin>
-                                                <Insets left="20.0" />
-                                             </VBox.margin>
-                                          </Line>
+                                          </VBox>
+                                          <Button fx:id="buyButton" layoutX="117.0" layoutY="304.0" mnemonicParsing="false" onMouseEntered="#BuyButtonHovered" onMousePressed="#buy" prefHeight="51.0" prefWidth="154.0" style="-fx-background-color: #212F4B;" styleClass="text" stylesheets="@style.css" text="Buy" textFill="WHITE">
+                                             <font>
+                                                <Font size="22.0" />
+                                             </font>
+                                          </Button>
                                        </children>
-                                    </VBox>
-                                    <Button layoutX="233.0" layoutY="288.0" mnemonicParsing="false" onMousePressed="#buy" prefHeight="51.0" prefWidth="154.0" style="-fx-background-color: lightblue;" text="Buy" />
+                                    </Pane>
+                                    <Pane prefHeight="405.0" prefWidth="288.0">
+                                       <children>
+                                          <Pane layoutY="5.0" prefHeight="388.0" prefWidth="286.0">
+                                             <children>
+                                                <ImageView fx:id="img" fitHeight="403.0" fitWidth="287.0" pickOnBounds="true">
+                                                   <image>
+                                                      <Image url="@../../images/Icons/Apex_legends_cover.jpg" />
+                                                   </image>
+                                                </ImageView>
+                                             </children>
+                                          </Pane>
+                                       </children>
+                                    </Pane>
+                                    <Pane layoutX="766.0" layoutY="14.0" prefHeight="389.0" prefWidth="313.0" style="-fx-background-color: grey; -fx-background-radius: 20; -fx-background-color: #344464;" />
                                  </children>
                               </Pane>
-                              <Pane prefHeight="405.0" prefWidth="288.0">
+                              <Label layoutX="48.0" layoutY="490.0" styleClass="text" stylesheets="@style.css" text="Screenshots">
+                                 <font>
+                                    <Font size="33.0" />
+                                 </font>
+                              </Label>
+                              <Line endX="1273.0" layoutX="-1246.0" layoutY="542.0" startX="2377.0" stroke="WHITE" />
+                              <HBox layoutX="24.0" layoutY="551.0" prefHeight="332.0" prefWidth="1102.0" spacing="70.0">
                                  <children>
-                                    <Pane layoutY="5.0" prefHeight="388.0" prefWidth="286.0">
+                                    <ImageView fx:id="ss1" fitHeight="332.0" fitWidth="302.0" pickOnBounds="true">
+                                       <image>
+                                          <Image url="@../../images/Icons/GameImages/Apex%20Legends%20Screenshots/images.jpeg" />
+                                       </image>
+                                    </ImageView>
+                                    <ImageView fx:id="ss2" fitHeight="332.0" fitWidth="302.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true">
+                                       <image>
+                                          <Image url="@../../images/Icons/GameImages/Apex%20Legends%20Screenshots/apexscreenshot3.jpeg" />
+                                       </image>
+                                    </ImageView>
+                                    <ImageView fx:id="ss3" fitHeight="332.0" fitWidth="302.0" layoutX="312.0" layoutY="10.0" pickOnBounds="true">
+                                       <image>
+                                          <Image url="@../../images/Icons/GameImages/Apex%20Legends%20Screenshots/apexscreenshot2.jpeg" />
+                                       </image>
+                                    </ImageView>
+                                 </children>
+                                 <padding>
+                                    <Insets left="20.0" />
+                                 </padding>
+                              </HBox>
+                              <Label layoutX="48.0" layoutY="913.0" styleClass="text" stylesheets="@style.css" text="Overview">
+                                 <font>
+                                    <Font size="33.0" />
+                                 </font>
+                              </Label>
+                              <Line endX="1220.0" layoutX="-1181.0" layoutY="970.0" startX="2314.0" stroke="WHITE" />
+                              <HBox layoutX="40.0" layoutY="985.0" prefHeight="424.0" prefWidth="1096.0">
+                                 <children>
+                                    <Pane prefHeight="424.0" prefWidth="516.0">
                                        <children>
-                                          <ImageView fx:id="img" fitHeight="404.0" fitWidth="287.0" pickOnBounds="true">
-                                             <image>
-                                                <Image url="@../../images/Icons/Apex_legends_cover.jpg" />
-                                             </image>
-                                          </ImageView>
+                                          <Label fx:id="description" alignment="TOP_LEFT" layoutX="-3.0" layoutY="-5.0" prefHeight="428.0" prefWidth="524.0" styleClass="text" text="this is a descriptionthis is a descriptionthis is a descriptionthis is a descriptionthis is a descriptionthis is a descriptionthis is a descriptionthis is a descriptionthis is a descriptionthis is a descriptionthis is a descriptionthis is a descriptionthis is a description" textFill="WHITE" wrapText="true">
+                                             <font>
+                                                <Font size="27.0" />
+                                             </font>
+                                          </Label>
                                        </children>
                                     </Pane>
                                  </children>
-                              </Pane>
-                              <Pane layoutX="698.0" layoutY="12.0" prefHeight="389.0" prefWidth="313.0" style="-fx-background-color: grey; -fx-background-radius: 20;" />
+                              </HBox>
                            </children>
-                        </Pane>
+                        </AnchorPane>
                      </content>
                   </ScrollPane>
                </children>
             </Pane>
          </center>
       </BorderPane>
+      <VBox prefHeight="200.0" prefWidth="100.0" />
    </children>
 </AnchorPane>

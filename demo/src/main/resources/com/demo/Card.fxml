@@ -9,18 +9,18 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="450.0" prefWidth="177.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.demo.CardController">
+<AnchorPane prefHeight="338.0" prefWidth="258.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.demo.CardController">
    <children>
-      <Button layoutX="-5.0" mnemonicParsing="false" onMousePressed="#productPressed" prefHeight="450.0" prefWidth="263.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="-6.0" AnchorPane.topAnchor="0.0">
+      <Button layoutX="-5.0" mnemonicParsing="false" onMousePressed="#productPressed" prefHeight="320.0" prefWidth="264.0" style="-fx-background-radius: 20; -fx-background-color: #212F4B;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="-6.0" AnchorPane.topAnchor="0.0">
          <graphic>
-            <VBox prefHeight="442.0" prefWidth="234.0">
+            <VBox prefHeight="371.0" prefWidth="248.0">
                <children>
-                  <ImageView id="gameImg" fx:id="gameImg" fitHeight="347.0" fitWidth="372.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView id="gameImg" fx:id="gameImg" fitHeight="231.0" fitWidth="248.0" pickOnBounds="true">
                      <image>
                         <Image url="@../../images/Icons/New%20Project.jpg" />
                      </image>
                   </ImageView>
-                  <Label id="gameName" fx:id="gameName" prefHeight="56.0" prefWidth="295.0" text="Game Name">
+                  <Label id="gameName" fx:id="gameName" prefHeight="56.0" prefWidth="295.0" style="-fx-background-color: whi;" styleClass="text" stylesheets="@style.css" text="Game Name" textFill="WHITE">
                      <font>
                         <Font name="Cambria Bold" size="25.0" />
                      </font>
@@ -28,7 +28,7 @@
                         <Insets left="5.0" />
                      </VBox.margin>
                   </Label>
-                  <Label id="gamePrice" fx:id="gamePrice" layoutX="15.0" layoutY="310.0" prefHeight="39.0" prefWidth="300.0" text="Price">
+                  <Label id="gamePrice" fx:id="gamePrice" layoutX="15.0" layoutY="310.0" prefHeight="39.0" prefWidth="300.0" style="-fx-background-color: whi;" styleClass="text" stylesheets="@style.css" text="Price" textFill="WHITE">
                      <font>
                         <Font name="Cambria" size="25.0" />
                      </font>

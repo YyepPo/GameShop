@@ -8,15 +8,18 @@ public class BaseGame {
     protected String gameImg;
     protected String gameDesc;
     protected double gamePrice;
-    protected E_GameType gameType; //This is an enum that represents the game type
+    protected String gameType; //This is an enum that represents the game type
     protected String gameReleaseDate;
     protected ArrayList<String> screenShots = new ArrayList<String>();
 
+    private int gameID = 0;
+
 
     //Constructor
-    BaseGame(String name,String gameImg,String gameDesc,double gamePrice,E_GameType gameType,ArrayList<String> screenShots,
+    BaseGame(int gameID,String name,String gameImg,String gameDesc,double gamePrice,String gameType,ArrayList<String> screenShots,
              String gameReleaseDate)
     {
+        this.gameID = gameID;
         this.name = name;
         this.gameImg = gameImg;
         this.gameDesc = gameDesc;
@@ -24,6 +27,8 @@ public class BaseGame {
         this.gameType = gameType;
         this.screenShots = screenShots;
         this.gameReleaseDate = gameReleaseDate;
+
+        gameID++;
     }
 
     ///
@@ -38,11 +43,12 @@ public class BaseGame {
     ///
     /// Getters
     ///
+    public final int GetGameID() {return gameID;}
     public final String GetGameName() {return name;}
     public final String GetGameImg() {return gameImg;}
     public final String GetGameDesc() {return gameDesc;}
     public final double GetGamePrice() {return gamePrice;}
-    public final E_GameType GetGameType() {return gameType;}
+    public final String GetGameType() {return gameType;}
     public final ArrayList<String> GetScreenShots() {return screenShots;}
     public final String GetGameReleaseDate() {return gameReleaseDate;}
 

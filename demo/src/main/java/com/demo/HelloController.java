@@ -14,12 +14,14 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.shape.Line;
 import javafx.stage.Stage;
 
 import javax.xml.transform.Result;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -48,18 +50,52 @@ public class HelloController implements Initializable {
     @FXML
     private Button homeButton;
 
+    @FXML
+    private Line profileLine;
+    @FXML
+    private Line homeLine;
+
     boolean bIsUserInHomePage = true;
 
+    Connection connection;
+    Statement statement;
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle)
     {
-        homeButton.setStyle("-fx-background-color: darkgrey");
-        homeHBox.setStyle("-fx-background-color: darkgrey");
+        gameCounter = 0;
 
-        games = new ArrayList<BaseGame>(GetGames());
+        final String urll = "jdbc:mysql://localhost:3306/gameshop";
+        final String username = "root";
+        final String password = "";
+        try
+        {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            connection = DriverManager.getConnection(urll,username,password);
+            statement = connection.createStatement();
+        } catch (ClassNotFoundException | SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        homeButton.setStyle("-fx-background-color: #4061A3");
+        homeHBox.setStyle("-fx-background-color: #4061A3");
+
+        homeLine.setVisible(true);
+        profileLine.setVisible(false);
+
+        try {
+            games = new ArrayList<BaseGame>(GetGames());
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
 
         int column = 0;
         int row = 1;
+
+        for(int i = 0;i<games.size();i++)
+        {
+            gameCounter++;
+        }
+
         gameCardNumber.setText("Games: " + Integer.toString(gameCounter));
         try {
             for (BaseGame game : games) {
@@ -72,7 +108,6 @@ public class HelloController implements Initializable {
                 cardController.SetData(game);
 
                 //If in a row there are 5 columns than go to the next row and set its column number to 0
-                //So basically a row can have 5 columns
                 if(column == 3)
                 {
                     column = 0;
@@ -89,50 +124,54 @@ public class HelloController implements Initializable {
 
     public void SetHelloControllerData()
     {
-        profileName.setText(User.getUserName());
+        //profileName.setText(User.getUserName());
     }
 
-    final String urll = "jdbc:mysql://localhost:3306/gameshop";
-    final String username = "root";
-    final String password = "";
-
-    public Connection GetConnection() throws SQLException, ClassNotFoundException {
-        Class.forName("com.mysql.cj.jdbc.Driver");
-        return DriverManager.getConnection(urll, username, password);
-    }
-
-        private List<BaseGame> GetGames()
-    {
+    private List<BaseGame> GetGames() throws SQLException {
         List<BaseGame> baseGames = new ArrayList<BaseGame>();
-        AddGameCard("Witcher 3","..\\..\\images\\Icons\\New Project.jpg",
-                "Action RPG game",14.99,E_GameType.ActionRPG,null,16,
-                "Windows 10 64 bit","i5 12400f",8,"GTX 1050Ti",
-                "Nov 19/2021",50, baseGames);
-        AddGameCard("Witcher 3","..\\..\\images\\Icons\\New Project.jpg",
-                "Action RPG game",14.99,E_GameType.ActionRPG,null,16,
-                "Windows 10 64 bit","i5 12400f",8,"GTX 1050Ti",
-                "Nov 19/2021",50, baseGames);
-        AddGameCard("Witcher 3","..\\..\\images\\Icons\\New Project.jpg",
-                "Action RPG game",14.99,E_GameType.ActionRPG,null,16,
-                "Windows 10 64 bit","i5 12400f",8,"GTX 1050Ti",
-                "Nov 19/2021",50, baseGames);
-        AddGameCard("Witcher 3","..\\..\\images\\Icons\\New Project.jpg",
-                "Action RPG game",14.99,E_GameType.ActionRPG,null,16,
-                "Windows 10 64 bit","i5 12400f",8,"GTX 1050Ti",
-                "Nov 19/2021",50, baseGames);
+        ResultSet set = statement.executeQuery("select * from game");
+        while(set.next())
+        {
+            final int gameID = set.getInt(1);
+            final String gameTitle = set.getString(2);
+            final String gameGenre = set.getString(3);
+            final float gamePrice = set.getFloat(4);
+            final String releaseDate = set.getString(5);
+            final String description = set.getString(6);
+            final String img = set.getString(7);
+            //..\..\images\Icons\New Project.jpg
+            final int ageRestriction = set.getInt(8);
+            final String operatingSystem = set.getString(9);
+            final int memory = set.getInt(10);
+            final String graphicsCard = set.getString(11);
+            final int storage = set.getInt(12);
+
+            final String ss1 = set.getString(13);
+            final String ss2 = set.getString(14);
+            final String ss3 = set.getString(15);
+
+            ArrayList<String> screenshots = new ArrayList<>();
+            screenshots.add(ss1);
+            screenshots.add(ss2);
+            screenshots.add(ss3);
+
+            AddGameCard(gameID,gameTitle,img,description
+                    ,gamePrice,gameGenre,screenshots,16,
+                    operatingSystem,"i5 12400f",memory,graphicsCard,
+                    releaseDate,storage, baseGames);
+        }
         return baseGames;
     }
 
-    private void AddGameCard(String name, String gameImg, String gameDesc, double gamePrice, E_GameType gameType,
+    private void AddGameCard(int id,String name, String gameImg, String gameDesc, double gamePrice, String gameType,
                              ArrayList<String> screenShots, int ageRestriction, String operationSystem,String processor,
                              int memory,String graphicsCard,String gameReleaseDate,int storage,List<BaseGame> gameCards
                              )
     {
-        VideoGame game = new VideoGame(name,gameImg,gameDesc,gamePrice,gameType,screenShots,ageRestriction,operationSystem,processor,
+        VideoGame game = new VideoGame(id,name,gameImg,gameDesc,gamePrice,gameType,screenShots,ageRestriction,operationSystem,processor,
                 memory,graphicsCard,storage,gameReleaseDate);
         game.SetImgSrc(gameImg);
         gameCards.add(game);
-        gameCounter++;
     }
 
     @FXML
@@ -148,13 +187,14 @@ public class HelloController implements Initializable {
     @FXML
     void OnProfileButtonPressed(MouseEvent event) throws IOException
     {
+        //Load profile page
+
          Stage stage;
          Scene scene;
          Parent root;
 
         FXMLLoader load = new FXMLLoader();
         load.setLocation(getClass().getResource("profile.fxml"));
-
         root = load.load();
 
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
@@ -162,5 +202,4 @@ public class HelloController implements Initializable {
         stage.setScene(scene);
         stage.show();
     }
-
 }

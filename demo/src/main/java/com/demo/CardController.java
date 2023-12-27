@@ -13,6 +13,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 
 public class CardController {
     @FXML
@@ -24,18 +25,28 @@ public class CardController {
     @FXML
     private Label gamePrice;
     private String gameReleaseDate;
+    private String gameDescription;
+    private int gameID;
+    BaseGame game;
+
+    private ArrayList<String> screenshots;
+
     public void SetData(BaseGame game)
     {
+        this.game = game;
         InputStream is = getClass().getResourceAsStream("..\\..\\images\\Icons\\New Project.jpg");
         if(is != null)
         {
             Image img = new Image(is);
             gameImg.setImage(img);
         }
+        gameID = game.GetGameID();
         gameName.setText(game.GetGameName());
         String priceToString = Double.toString(game.GetGamePrice());
         gamePrice.setText(priceToString);
         gameReleaseDate = game.GetGameReleaseDate();
+        gameDescription = game.GetGameDesc();
+        screenshots = game.GetScreenShots();
     }
 
     private Stage stage;
@@ -50,8 +61,9 @@ public class CardController {
         root = load.load();
 
         ProductController productController = load.getController();
-        //productController.InitializeData(Integer.toString(a),gameImg.getImage(),gameName.getText(),gamePrice.getText(),gameReleaseDate);
-
+        productController.InitializeData(gameID,gameName.getText(),
+                gamePrice.getText(),gameReleaseDate,gameDescription,screenshots);
+        System.out.println(gameID);
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setScene(scene);
