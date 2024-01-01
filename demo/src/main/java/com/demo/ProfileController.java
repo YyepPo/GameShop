@@ -9,6 +9,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
@@ -52,6 +53,11 @@ public class ProfileController implements Initializable {
     private ArrayList<BaseGame> games = new ArrayList<>();
     private ArrayList<Integer> gameIds = new ArrayList<>();
 
+    @FXML
+    private ScrollPane gamesPane;
+    @FXML
+    private GridPane friendGrid;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         profileButton.setStyle("-fx-background-color: #4061A3");
@@ -76,7 +82,6 @@ public class ProfileController implements Initializable {
         } catch (ClassNotFoundException | SQLException e) {
             throw new RuntimeException(e);
         }
-
 
         String sql = "SELECT u.username, g.game_ID " +
                 "FROM user u " +
@@ -113,7 +118,7 @@ public class ProfileController implements Initializable {
                 AnchorPane pane = fxmlLoader.load();
 
                 CardController cardController = fxmlLoader.getController();
-                cardController.SetData(game);
+                cardController.SetData(game,true);
 
                 //If in a row there are 5 columns than go to the next row and set its column number to 0
                 if(column == 3)
@@ -129,8 +134,6 @@ public class ProfileController implements Initializable {
             throw new RuntimeException(e);
         }
     }
-
-
 
     @FXML
     void OnHomeButtonPressed(MouseEvent event) throws IOException {
@@ -190,7 +193,7 @@ public class ProfileController implements Initializable {
         return baseGames;
     }
 
-    private void AddGameCard(int id, String name, String gameImg, String gameDesc, double gamePrice, String gameType,
+        private void AddGameCard(int id, String name, String gameImg, String gameDesc, double gamePrice, String gameType,
                              ArrayList<String> screenShots, int ageRestriction, String operationSystem, String processor,
                              int memory, String graphicsCard, String gameReleaseDate, int storage, List<BaseGame> gameCards
     )
@@ -200,4 +203,23 @@ public class ProfileController implements Initializable {
         game.SetImgSrc(gameImg);
         gameCards.add(game);
     }
+
+    private Stage stage;
+    private Scene scene;
+    private Parent root;
+
+    @FXML
+    void OnFriendButtonPressed(MouseEvent event) throws IOException
+    {
+        FXMLLoader load = new FXMLLoader();
+        load.setLocation(getClass().getResource("Friend.fxml"));
+        root = load.load();
+
+        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+
+
 }

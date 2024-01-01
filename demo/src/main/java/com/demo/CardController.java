@@ -2,6 +2,7 @@ package com.demo;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -13,9 +14,11 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.ResourceBundle;
 
-public class CardController {
+public class CardController implements Initializable {
     @FXML
     private ImageView gameImg;
 
@@ -31,7 +34,8 @@ public class CardController {
 
     private ArrayList<String> screenshots;
 
-    public void SetData(BaseGame game)
+    boolean bDownloadGame = false;
+    public void SetData(BaseGame game,boolean bIsFromProfile)
     {
         this.game = game;
         InputStream is = getClass().getResourceAsStream("..\\..\\images\\Icons\\New Project.jpg");
@@ -62,11 +66,17 @@ public class CardController {
 
         ProductController productController = load.getController();
         productController.InitializeData(gameID,gameName.getText(),
-                gamePrice.getText(),gameReleaseDate,gameDescription,screenshots);
-        System.out.println(gameID);
+                gamePrice.getText(),gameReleaseDate,gameDescription,screenshots,bDownloadGame);
+
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
+    }
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle)
+    {
+        if(bDownloadGame){}
     }
 }

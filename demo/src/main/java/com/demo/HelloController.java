@@ -105,7 +105,7 @@ public class HelloController implements Initializable {
                 AnchorPane pane = fxmlLoader.load();
 
                 CardController cardController = fxmlLoader.getController();
-                cardController.SetData(game);
+                cardController.SetData(game,false);
 
                 //If in a row there are 5 columns than go to the next row and set its column number to 0
                 if(column == 3)

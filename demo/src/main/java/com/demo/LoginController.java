@@ -46,6 +46,10 @@ public class LoginController implements Initializable
     @FXML
     private TextField registerUsername;
 
+    @FXML
+    private TextField registerImagePath;
+
+
     boolean bUserNameExists = false;
     boolean bPasswordExists = false;
 
@@ -139,11 +143,12 @@ public class LoginController implements Initializable
         final String email = registerEmail.getText();
         final String firstName = registerFirstname.getText();
         final String lastName = registerLastName.getText();
+        final String imagePath = registerImagePath.getText();
 
         System.out.println(username+" "+password+" "+email+" "+ firstName +" "+ lastName);
     
-        String query = " insert into user (username, password, email, firstName, lastName)"
-                + " values (?, ?, ?, ?, ?)";
+        String query = " insert into user (username, password, email, firstName, lastName,profileImagePath)"
+                + " values (?, ?, ?, ?, ?, ?)";
 
         PreparedStatement preparedStatement = connection.prepareStatement(query);
         preparedStatement.setString(1,username);
@@ -151,6 +156,7 @@ public class LoginController implements Initializable
         preparedStatement.setString(3,email);
         preparedStatement.setString(4,firstName);
         preparedStatement.setString(5,lastName);
+        preparedStatement.setString(6,imagePath);
         preparedStatement.executeUpdate();
         connection.close();
 

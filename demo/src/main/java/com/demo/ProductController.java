@@ -1,5 +1,6 @@
 package com.demo;
 
+import com.mysql.cj.protocol.Resultset;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -18,6 +19,7 @@ import javafx.stage.Stage;
 import javafx.util.converter.FloatStringConverter;
 
 import javax.swing.*;
+import javax.xml.transform.Result;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
@@ -78,9 +80,11 @@ public class ProductController implements Initializable {
     private Statement st;
     private Connection conn;
 
+    boolean bFromProfile;
+
+
     @Override
-    public void initialize(URL url, ResourceBundle resourceBundle)
-    {
+    public void initialize(URL url, ResourceBundle resourceBundle) {
         final String urll = "jdbc:mysql://localhost:3306/gameshop";
         final String usernamee = "root";
         final String passwordd = "";
@@ -93,15 +97,35 @@ public class ProductController implements Initializable {
         } catch (ClassNotFoundException | SQLException e) {
             throw new RuntimeException(e);
         }
+
+        String sql = "select * from user_game where game_id =" + 1;
+
+            try {
+                PreparedStatement preparedStatement = conn.prepareStatement(sql);
+                ResultSet set = preparedStatement.executeQuery();
+            } catch (SQLException e) {
+                throw new RuntimeException("qwe");
+            }
+
+        if(bFromProfile)
+        {
+            System.out.print("yes");
+        }
+        else
+        {
+            System.out.print("false");
+        }
     }
     public void InitializeData(int id,String name, String price, String releaseDate, String gameDescription,
-                               ArrayList<String> screenshots)
+                               ArrayList<String> screenshots,boolean  bFromProfile)
     {
         gameID = id;
         gameName.setText(name);
         this.price.setText(price);
         release.setText(releaseDate);
         description.setText(gameDescription);
+        this.bFromProfile = bFromProfile;
+
         /*Image img1 = new Image(screenshots.get(0));
         ss1.setImage(img1);
 
@@ -115,7 +139,6 @@ public class ProductController implements Initializable {
     private Stage stage;
     private Scene scene;
     private Parent root;
-
 
     @FXML
     void OnHomeButtonPressed(MouseEvent event) throws IOException {
