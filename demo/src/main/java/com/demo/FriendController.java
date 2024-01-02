@@ -5,6 +5,9 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
@@ -13,6 +16,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.shape.Line;
+import javafx.stage.Stage;
 
 import javax.lang.model.type.ArrayType;
 import javax.xml.transform.Result;
@@ -182,9 +186,28 @@ public class FriendController implements Initializable {
     }
 
     @FXML
-    void OnHomeButtonPressed(MouseEvent event)
-    {
+    void OnHomeButtonPressed(MouseEvent event) throws IOException {
+        LoadPage("hello-view.fxml",event);
+    }
 
+    @FXML
+    void OnProfileButtonPressed(MouseEvent event) throws IOException {
+        LoadPage("profile.fxml",event);
+    }
+
+    private void LoadPage(final String pageName,MouseEvent event) throws IOException {
+        Stage stage;
+        Scene scene;
+        Parent root;
+
+        FXMLLoader load = new FXMLLoader();
+        load.setLocation(getClass().getResource(pageName));
+        root = load.load();
+
+        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
     }
 
     private void AddFriendToGrid(int id,String name,String imagePath,ArrayList<Friend> allFriends)

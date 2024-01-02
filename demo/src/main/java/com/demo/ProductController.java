@@ -1,6 +1,5 @@
 package com.demo;
 
-import com.mysql.cj.protocol.Resultset;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -9,17 +8,12 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.shape.Line;
-import javafx.scene.text.Font;
 import javafx.stage.Stage;
-import javafx.util.converter.FloatStringConverter;
 
-import javax.swing.*;
-import javax.xml.transform.Result;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
@@ -106,18 +100,10 @@ public class ProductController implements Initializable {
             } catch (SQLException e) {
                 throw new RuntimeException("qwe");
             }
-
-        if(bFromProfile)
-        {
-            System.out.print("yes");
-        }
-        else
-        {
-            System.out.print("false");
-        }
     }
+
     public void InitializeData(int id,String name, String price, String releaseDate, String gameDescription,
-                               ArrayList<String> screenshots,boolean  bFromProfile)
+                               ArrayList<String> screenshots)
     {
         gameID = id;
         gameName.setText(name);
@@ -143,8 +129,27 @@ public class ProductController implements Initializable {
     @FXML
     void OnHomeButtonPressed(MouseEvent event) throws IOException {
         //Load home page
+        Test.SetIsInProfilePage(false);
         FXMLLoader load = new FXMLLoader();
+
         load.setLocation(getClass().getResource("hello-view.fxml"));
+        root = load.load();
+
+        HelloController controller = load.getController();
+        controller.SetHelloControllerData(false);
+
+        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    @FXML
+    void OnProfileButtonPressed(MouseEvent event) throws IOException {
+        Test.SetIsInProfilePage(true);
+
+        FXMLLoader load = new FXMLLoader();
+        load.setLocation(getClass().getResource("profile.fxml"));
         root = load.load();
 
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
@@ -156,6 +161,7 @@ public class ProductController implements Initializable {
     @FXML
     void buy(MouseEvent event) throws SQLException
     {
+
         //Check if user has the game
 
         //Check if user has enough coins to buy the game

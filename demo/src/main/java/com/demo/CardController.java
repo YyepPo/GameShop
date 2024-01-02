@@ -34,7 +34,8 @@ public class CardController implements Initializable {
 
     private ArrayList<String> screenshots;
 
-    boolean bDownloadGame = false;
+
+    boolean bIsFromProfile;
     public void SetData(BaseGame game,boolean bIsFromProfile)
     {
         this.game = game;
@@ -51,6 +52,8 @@ public class CardController implements Initializable {
         gameReleaseDate = game.GetGameReleaseDate();
         gameDescription = game.GetGameDesc();
         screenshots = game.GetScreenShots();
+
+        this.bIsFromProfile = bIsFromProfile;
     }
 
     private Stage stage;
@@ -59,24 +62,51 @@ public class CardController implements Initializable {
     @FXML
     void productPressed(MouseEvent event) throws IOException
     {
-        FXMLLoader load = new FXMLLoader();
-        load.setLocation(getClass().getResource("Product.fxml"));
+        if(Test.GetIsInProfilePage())
+        {
+            Stage stage;
+            Scene scene;
+            Parent root;
+            FXMLLoader load = new FXMLLoader();
+            load.setLocation(getClass().getResource("BoughtProduct.fxml"));
 
-        root = load.load();
+            root = load.load();
 
-        ProductController productController = load.getController();
-        productController.InitializeData(gameID,gameName.getText(),
-                gamePrice.getText(),gameReleaseDate,gameDescription,screenshots,bDownloadGame);
+            BoughtProductController boughtProductController = load.getController();
+            boughtProductController.InitializeBoughtProductData(gameID,gameName.getText(),
+                    gamePrice.getText(),gameReleaseDate,gameDescription,screenshots);
 
-        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+            stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+            scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        }
+
+        if(!Test.GetIsInProfilePage())
+        {
+            Stage stage;
+            Scene scene;
+            Parent root;
+            FXMLLoader load = new FXMLLoader();
+            load.setLocation(getClass().getResource("Product.fxml"));
+
+            root = load.load();
+
+            ProductController productController = load.getController();
+            productController.InitializeData(gameID,gameName.getText(),
+                    gamePrice.getText(),gameReleaseDate,gameDescription,screenshots);
+
+            stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+            scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        }
+
+
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle)
     {
-        if(bDownloadGame){}
     }
 }

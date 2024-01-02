@@ -138,6 +138,7 @@ public class ProfileController implements Initializable {
     @FXML
     void OnHomeButtonPressed(MouseEvent event) throws IOException {
 
+        Test.SetIsInProfilePage(false);
         Stage stage;
         Scene scene;
         Parent root;

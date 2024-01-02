@@ -184,11 +184,17 @@ public class HelloController implements Initializable {
         }
     }
 
+    public void SetHelloControllerData(boolean isInProfilePage)
+    {
+        Test.SetIsInProfilePage(isInProfilePage);
+    }
+
+
     @FXML
     void OnProfileButtonPressed(MouseEvent event) throws IOException
     {
         //Load profile page
-
+        Test.SetIsInProfilePage(true);
          Stage stage;
          Scene scene;
          Parent root;
