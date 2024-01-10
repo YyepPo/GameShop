@@ -14,7 +14,10 @@ import javafx.scene.layout.HBox;
 import javafx.scene.shape.Line;
 import javafx.stage.Stage;
 
+import javax.xml.transform.Result;
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.net.URL;
 import java.sql.*;
 import java.util.ArrayList;
@@ -27,6 +30,9 @@ public class ProductController implements Initializable {
 
     @FXML
     private Label gameName;
+
+    @FXML
+    private Label dollarAmount;
 
     @FXML
     private Button homeButton;
@@ -77,8 +83,20 @@ public class ProductController implements Initializable {
     boolean bFromProfile;
 
 
+    @FXML
+    private Label ageRestriction;
+    @FXML
+    private Label cpu;
+    @FXML
+    private Label ram;
+    @FXML
+    private Label storage;
+    @FXML
+    private Label card;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        //Create database
         final String urll = "jdbc:mysql://localhost:3306/gameshop";
         final String usernamee = "root";
         final String passwordd = "";
@@ -92,18 +110,10 @@ public class ProductController implements Initializable {
             throw new RuntimeException(e);
         }
 
-        String sql = "select * from user_game where game_id =" + 1;
-
-            try {
-                PreparedStatement preparedStatement = conn.prepareStatement(sql);
-                ResultSet set = preparedStatement.executeQuery();
-            } catch (SQLException e) {
-                throw new RuntimeException("qwe");
-            }
+        dollarAmount.setText(String.valueOf(GetDollarAmountFromUser()));
     }
-
     public void InitializeData(int id,String name, String price, String releaseDate, String gameDescription,
-                               ArrayList<String> screenshots)
+                               ArrayList<String> screenshots,int ageRestrcition,String cpu,int ram,int storage,String card)
     {
         gameID = id;
         gameName.setText(name);
@@ -111,7 +121,11 @@ public class ProductController implements Initializable {
         release.setText(releaseDate);
         description.setText(gameDescription);
         this.bFromProfile = bFromProfile;
-
+        this.ageRestriction.setText(String.valueOf(ageRestrcition));
+        this.cpu.setText(cpu);
+        this.ram.setText(String.valueOf(ram) + "GB");
+        this.storage.setText(String.valueOf(storage) + "GB");
+        this.card.setText(card);
         /*Image img1 = new Image(screenshots.get(0));
         ss1.setImage(img1);
 
@@ -148,50 +162,48 @@ public class ProductController implements Initializable {
     void OnProfileButtonPressed(MouseEvent event) throws IOException {
         Test.SetIsInProfilePage(true);
 
-        FXMLLoader load = new FXMLLoader();
-        load.setLocation(getClass().getResource("profile.fxml"));
-        root = load.load();
-
-        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+        //Load profile.fxml scene
+        SceneManager sceneManager = SceneManager.getInstance();
+        sceneManager.LoadScene(event,"profile.fxml");
     }
 
     @FXML
     void buy(MouseEvent event) throws SQLException
     {
+        //Check whether player owns this game or not
+        String query = "SELECT * FROM user_game WHERE game_id = " + gameID +
+                " AND user_id = " + User.GetUserID() +
+                " AND EXISTS (SELECT 1 FROM user_game WHERE user_id = " + User.GetUserID() + ")";
 
-        //Check if user has the game
-
-        //Check if user has enough coins to buy the game
-        //If true,insert the game info into db
-        if(User.GetAmount() < Double.valueOf(price.getText()))
+        ResultSet set = st.executeQuery(query);
+        if(set.next())
         {
-            System.out.println("User doesnt have enough money,basically hes broke");
+            System.out.println("Player already owns the game");
             return;
         }
 
-        User.SpendMoney(Double.valueOf(price.getText()));
-        System.out.println(User.GetAmount());
-        final int userID = User.GetUserID();
-        System.out.println("User id is:" +userID);
-        System.out.println("Game id is:" +gameID);
-
-        ResultSet result = st.executeQuery("select * from user_game where game_id=" + gameID);
-        if(result.next())
+        //Check if user has enough coins to buy the game
+        if(User.GetAmount() < Double.valueOf(price.getText()))
         {
-            ResultSet resultt = st.executeQuery("select * from user_game where user_id=" + userID);
-            if(resultt.next())
-            {
-                System.out.println("Player already owns the game");
-                return;
-            }
+            System.out.println("User doesnt have enough money");
+            return;
         }
 
-        String sql ="INSERT INTO user_game (user_id, game_id) VALUES (?,?)";
-        PreparedStatement preparedStatement = conn.prepareStatement(sql);
-        preparedStatement.setInt(1,userID);
+        double priceLabelToDouble = Double.parseDouble(price.getText());
+        float dollarAmount = (float) (GetDollarAmountFromUser() - priceLabelToDouble);
+
+        // Updates the 'dollarAmount' field in the 'user' table with the calculated value,
+        // sets the 'price' field text to the new dollar amount, and executes the SQL update statement.
+        String updateSql = "Update user set dollarAmount =" + dollarAmount +" where user_ID =" + User.GetUserID();
+        price.setText(String.valueOf(dollarAmount));
+        PreparedStatement updatePreparedStatement = conn.prepareStatement(updateSql);
+        updatePreparedStatement.executeUpdate();
+
+        //Inserts a new record into the 'user_game' table associating the user (identified by user_id)
+        // with a specific game (identified by game_id).
+        String insertUser_gameSql ="INSERT INTO user_game (user_id, game_id) VALUES (?,?)";
+        PreparedStatement preparedStatement = conn.prepareStatement(insertUser_gameSql);
+        preparedStatement.setInt(1,User.GetUserID());
         preparedStatement.setInt(2,gameID);
         preparedStatement.executeUpdate();
     }
@@ -200,6 +212,26 @@ public class ProductController implements Initializable {
     void BuyButtonHovered(MouseEvent event) {
 
     }
+
+    private int GetDollarAmountFromUser()
+    {
+        int dollarAmount = 0;
+        String getDollarAmountSql = "select * from user where user_ID = " + User.GetUserID();
+        try {
+            PreparedStatement preparedStatement = conn.prepareStatement(getDollarAmountSql);
+            ResultSet set = preparedStatement.executeQuery();
+            if(set.next())
+            {
+                dollarAmount = set.getInt("dollarAmount");
+                return dollarAmount;
+            }
+        }
+        catch (SQLException e){
+            throw new RuntimeException("user_game data base error (ProductController initialize)");
+        }
+        return 0;
+    }
+
 }
 
 

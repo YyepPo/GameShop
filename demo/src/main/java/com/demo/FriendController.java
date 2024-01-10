@@ -69,12 +69,15 @@ public class FriendController implements Initializable {
     private ArrayList<Friend> friends = new ArrayList<>();
     Connection connection;
 
+    SceneManager sceneManager;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle)
     {
         int column = 0;
         int row = 1;
 
+        //Create database link
         final String urll = "jdbc:mysql://localhost:3306/gameshop";
         final String username = "root";
         final String password = "";
@@ -86,6 +89,9 @@ public class FriendController implements Initializable {
             throw new RuntimeException(e);
         }
 
+        //Find and retrieve the user IDs of friends for a
+        //given username from a database, employing JOIN operations and PreparedStatement for
+        //secure database interaction
         String sql = "SELECT u2.user_ID " +
                 "From user u1 " +
                 "Join user_friend uf on u1.user_ID = uf.user_ID "+
@@ -115,6 +121,7 @@ public class FriendController implements Initializable {
 
         try {
             for (Friend friend: GetFriends()) {
+                //Load FriendCard.fxml scene
                 FXMLLoader fxmlLoader = new FXMLLoader();
                 fxmlLoader.setLocation(getClass().getResource("FriendCard.fxml"));
 
@@ -123,7 +130,7 @@ public class FriendController implements Initializable {
                 FriendCardController friendCardController = fxmlLoader.getController();
                 friendCardController.SetData(friend);
 
-                //If in a row there are 5 columns than go to the next row and set its column number to 0
+                //ensure that after reaching the third column, it moves to the next row
                 if(column == 3)
                 {
                     column = 0;
@@ -138,6 +145,8 @@ public class FriendController implements Initializable {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+
+        sceneManager = SceneManager.getInstance();
     }
 
     private ArrayList<Friend> GetFriends() throws SQLException {
@@ -161,8 +170,9 @@ public class FriendController implements Initializable {
 
     @FXML
     void AddFriendEvent(MouseEvent event) throws SQLException   {
-        System.out.println(addFriendTextField.getText());
         Statement statement = connection.createStatement();
+        //Check whether the given friend username exists
+        //If it does then add that friend
         String sql = "select * from user where username = '" + addFriendTextField.getText() +"';";
         ResultSet result = statement.executeQuery(sql);
         if(result.next())
@@ -187,27 +197,12 @@ public class FriendController implements Initializable {
 
     @FXML
     void OnHomeButtonPressed(MouseEvent event) throws IOException {
-        LoadPage("hello-view.fxml",event);
+        sceneManager.LoadScene(event,"hello-view.fxml");
     }
 
     @FXML
     void OnProfileButtonPressed(MouseEvent event) throws IOException {
-        LoadPage("profile.fxml",event);
-    }
-
-    private void LoadPage(final String pageName,MouseEvent event) throws IOException {
-        Stage stage;
-        Scene scene;
-        Parent root;
-
-        FXMLLoader load = new FXMLLoader();
-        load.setLocation(getClass().getResource(pageName));
-        root = load.load();
-
-        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+        sceneManager.LoadScene(event,"profile.fxml");
     }
 
     private void AddFriendToGrid(int id,String name,String imagePath,ArrayList<Friend> allFriends)

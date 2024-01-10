@@ -22,8 +22,9 @@ import java.util.ResourceBundle;
 
 import java.io.BufferedInputStream;
 import java.io.FileOutputStream;
-import java.nio.channels.Channels;
-import java.nio.channels.ReadableByteChannel;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
 
 public class BoughtProductController implements Initializable {
     @FXML
@@ -78,6 +79,19 @@ public class BoughtProductController implements Initializable {
     private Statement st;
     private Connection conn;
 
+    @FXML
+    private Label ageRestriction;
+    @FXML
+    private Label cpu;
+    @FXML
+    private Label ram;
+    @FXML
+    private Label storage;
+    @FXML
+    private Label card;
+
+    private SceneManager sceneManager;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         final String urll = "jdbc:mysql://localhost:3306/gameshop";
@@ -93,24 +107,21 @@ public class BoughtProductController implements Initializable {
             throw new RuntimeException(e);
         }
 
-        String sql = "select * from user_game where game_id =" + 1;
-
-        try {
-            PreparedStatement preparedStatement = conn.prepareStatement(sql);
-            ResultSet set = preparedStatement.executeQuery();
-        } catch (SQLException e) {
-            throw new RuntimeException("qwe");
-        }
-
+        sceneManager = SceneManager.getInstance();
     }
-    public void InitializeBoughtProductData(int id, String name, String price, String releaseDate, String gameDescription,
-                               ArrayList<String> screenshots)
+    public void InitializeBoughtProductData(int id,String name, String price, String releaseDate, String gameDescription,
+                                            ArrayList<String> screenshots,int ageRestrcition,String cpu,int ram,int storage,String card)
     {
         gameID = id;
         gameName.setText(name);
         this.price.setText(price);
         release.setText(releaseDate);
         description.setText(gameDescription);
+        this.ageRestriction.setText(String.valueOf(ageRestrcition));
+        this.cpu.setText(cpu);
+        this.ram.setText(String.valueOf(ram) + "GB");
+        this.storage.setText(String.valueOf(storage) + "GB");
+        this.card.setText(card);
 
         /*Image img1 = new Image(screenshots.get(0));
         ss1.setImage(img1);
@@ -122,79 +133,46 @@ public class BoughtProductController implements Initializable {
         ss3.setImage(img3);*/
     }
 
-    private Stage stage;
-    private Scene scene;
-    private Parent root;
-
     @FXML
     void OnHomeButtonPressed(MouseEvent event) throws IOException {
-        //Load home page
+        //Load hello-view.fxml scene
         Test.SetIsInProfilePage(false);
-        FXMLLoader load = new FXMLLoader();
-        load.setLocation(getClass().getResource("hello-view.fxml"));
-        root = load.load();
-
-        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+        sceneManager.LoadScene(event,"hello-view.fxml");
     }
 
     @FXML
     void OnProfileButtonPressed(MouseEvent event) throws IOException {
+        //Load profile.fxml scene
         Test.SetIsInProfilePage(true);
-        FXMLLoader load = new FXMLLoader();
-        load.setLocation(getClass().getResource("profile.fxml"));
-        root = load.load();
-
-        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
-    }
-
-    @FXML
-    void buy(MouseEvent event) throws SQLException
-    {
-        //Check if user has the game
-
-        //Check if user has enough coins to buy the game
-        //If true,insert the game info into db
-        if(User.GetAmount() < Double.valueOf(price.getText()))
-        {
-            System.out.println("User doesnt have enough money,basically hes broke");
-            return;
-        }
-
-        User.SpendMoney(Double.valueOf(price.getText()));
-        System.out.println(User.GetAmount());
-        final int userID = User.GetUserID();
-        System.out.println("User id is:" +userID);
-        System.out.println("Game id is:" +gameID);
-
-        ResultSet result = st.executeQuery("select * from user_game where game_id=" + gameID);
-        if(result.next())
-        {
-            ResultSet resultt = st.executeQuery("select * from user_game where user_id=" + userID);
-            if(resultt.next())
-            {
-                System.out.println("Player already owns the game");
-                return;
-            }
-        }
-
-        String sql ="INSERT INTO user_game (user_id, game_id) VALUES (?,?)";
-        PreparedStatement preparedStatement = conn.prepareStatement(sql);
-        preparedStatement.setInt(1,userID);
-        preparedStatement.setInt(2,gameID);
-        preparedStatement.executeUpdate();
+        sceneManager.LoadScene(event,"profile.fxml");
     }
 
     @FXML
     void OnDownloadButtonPressed(MouseEvent event)
     {
+        //Download a file from given url
+        String fileUrl = "file:///D:/Viti2/ShkencaKompjuterike2/Projekti/Icons/DownloadTest.pdf";
+        String destinationPath = "Desktop";
 
+        try {
+            downloadFile(fileUrl, destinationPath);
+            System.out.println("File downloaded successfully.");
+        } catch (IOException e) {
+            System.err.println("Error downloading the file: " + e.getMessage());
+        }
     }
 
+    private static void downloadFile(String fileUrl, String destinationPath) throws IOException {
+        URL url = new URL(fileUrl);
+        try (InputStream in = new BufferedInputStream(url.openStream());
+             FileOutputStream fileOutputStream = new FileOutputStream(destinationPath)) {
+
+            byte[] buffer = new byte[1024];
+            int bytesRead;
+            while ((bytesRead = in.read(buffer, 0, buffer.length)) != -1) {
+                fileOutputStream.write(buffer, 0, bytesRead);
+            }
+        }
+    }
     //https://docs.google.com/document/d/1vUNDtNRBVzRDbZ46-0he_P4TVPgvTdT2Wc5jtROBO9U/edit?usp=drive_link
 }

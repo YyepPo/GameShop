@@ -14,11 +14,11 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="800.0" prefWidth="1642.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.demo.ProductController">
+<AnchorPane prefHeight="800.0" prefWidth="1407.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.demo.ProductController">
    <children>
-      <BorderPane prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <BorderPane prefHeight="800.0" prefWidth="1518.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="124.0" AnchorPane.topAnchor="0.0">
          <left>
-            <VBox prefHeight="800.0" prefWidth="466.0" style="-fx-background-color: #212F4B;" BorderPane.alignment="CENTER">
+            <VBox prefHeight="800.0" prefWidth="350.0" style="-fx-background-color: #212F4B;" BorderPane.alignment="CENTER">
                <children>
                   <Button id="#no-colorr" fx:id="homeButton" mnemonicParsing="false" onMousePressed="#OnHomeButtonPressed" prefHeight="146.0" prefWidth="451.0" style="-fx-background-color: #212F4B;" stylesheets="@style.css" textFill="#ffffff00">
                      <graphic>
@@ -82,32 +82,46 @@
             </VBox>
          </left>
          <center>
-            <Pane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+            <Pane prefHeight="800.0" prefWidth="1017.0" BorderPane.alignment="CENTER">
                <children>
-                  <VBox layoutY="-2.0" prefHeight="200.0" prefWidth="1178.0" styleClass="scroll-pane" stylesheets="@style.css">
+                  <VBox layoutY="-2.0" prefHeight="200.0" prefWidth="1029.0" styleClass="scroll-pane" stylesheets="@style.css">
                      <children>
-                        <Label fx:id="gameName" prefHeight="118.0" prefWidth="1149.0" styleClass="text" stylesheets="@style.css" text="Game Name" textFill="WHITE">
-                           <font>
-                              <Font size="50.0" />
-                           </font>
-                        </Label>
-                        <Line endX="1237.666748046875" startX="2386.166748046875" stroke="WHITE" />
+                        <HBox>
+                           <children>
+                              <Label fx:id="gameName" prefHeight="118.0" prefWidth="713.0" styleClass="text" stylesheets="@style.css" text="Game Name" textFill="WHITE">
+                                 <font>
+                                    <Font size="50.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="dollarAmount" layoutX="723.0" layoutY="10.0" prefHeight="118.0" prefWidth="147.0" styleClass="text" stylesheets="@style.css" text="99.99" textFill="WHITE">
+                                 <font>
+                                    <Font size="50.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="10.0" layoutY="10.0" prefHeight="118.0" prefWidth="51.0" styleClass="text" stylesheets="@style.css" text="\$" textFill="WHITE">
+                                 <font>
+                                    <Font size="50.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </HBox>
+                        <Line endX="1237.666748046875" startX="2268.959716796875" stroke="WHITE" />
                      </children>
                      <padding>
                         <Insets left="20.0" />
                      </padding>
                   </VBox>
-                  <ScrollPane layoutX="-1.0" layoutY="192.0" prefHeight="612.0" prefWidth="1177.0" stylesheets="@style.css">
+                  <ScrollPane layoutX="-1.0" layoutY="192.0" prefHeight="612.0" prefWidth="1064.0" stylesheets="@style.css">
                      <content>
-                        <AnchorPane prefHeight="1235.0" prefWidth="1134.0">
+                        <AnchorPane prefHeight="1409.0" prefWidth="973.0">
                            <children>
-                              <Pane nodeOrientation="LEFT_TO_RIGHT" prefHeight="416.0" prefWidth="1127.0" translateX="30.0">
+                              <Pane nodeOrientation="LEFT_TO_RIGHT" prefHeight="416.0" prefWidth="975.0" translateX="30.0">
                                  <children>
-                                    <Pane layoutX="269.0" layoutY="9.0" prefHeight="390.0" prefWidth="392.0" style="-fx-background-color: grey; -fx-background-radius: 20; -fx-background-color: #344464;">
+                                    <Pane layoutX="209.0" layoutY="10.0" prefHeight="390.0" prefWidth="374.0" style="-fx-background-color: grey; -fx-background-radius: 20; -fx-background-color: #344464;">
                                        <children>
-                                          <VBox layoutX="16.0" prefHeight="247.0" prefWidth="375.0">
+                                          <VBox layoutX="16.0" prefHeight="247.0" prefWidth="302.0">
                                              <children>
-                                                <HBox prefHeight="109.0" prefWidth="377.0">
+                                                <HBox prefHeight="109.0" prefWidth="314.0">
                                                    <children>
                                                       <Label prefHeight="122.0" prefWidth="175.0" styleClass="text" stylesheets="@style.css" text="Realase Date:">
                                                          <font>
@@ -117,7 +131,7 @@
                                                             <Insets left="10.0" />
                                                          </HBox.margin>
                                                       </Label>
-                                                      <Label fx:id="release" alignment="CENTER_RIGHT" layoutX="10.0" layoutY="10.0" prefHeight="122.0" prefWidth="175.0" styleClass="text" stylesheets="@style.css" text="Nov 19,2021">
+                                                      <Label fx:id="release" alignment="CENTER_RIGHT" layoutY="10.0" prefHeight="109.0" prefWidth="151.0" styleClass="text" stylesheets="@style.css" text="Nov 19,2021">
                                                          <font>
                                                             <Font size="23.0" />
                                                          </font>
@@ -132,7 +146,7 @@
                                                       <Insets left="20.0" />
                                                    </VBox.margin>
                                                 </Line>
-                                                <HBox layoutX="10.0" layoutY="10.0" prefHeight="109.0" prefWidth="377.0">
+                                                <HBox layoutX="10.0" layoutY="10.0" prefHeight="109.0" prefWidth="313.0">
                                                    <children>
                                                       <Label prefHeight="122.0" prefWidth="175.0" styleClass="text" stylesheets="@style.css" text="Price">
                                                          <font>
@@ -142,7 +156,7 @@
                                                             <Insets left="10.0" />
                                                          </HBox.margin>
                                                       </Label>
-                                                      <Label fx:id="price" alignment="CENTER_RIGHT" layoutX="10.0" layoutY="10.0" prefHeight="122.0" prefWidth="175.0" styleClass="text" stylesheets="@style.css" text="99.99$">
+                                                      <Label fx:id="price" alignment="CENTER_RIGHT" layoutX="10.0" layoutY="10.0" prefHeight="109.0" prefWidth="86.0" styleClass="text" stylesheets="@style.css" text="99.99$">
                                                          <font>
                                                             <Font size="23.0" />
                                                          </font>
@@ -163,11 +177,11 @@
                                           </Button>
                                        </children>
                                     </Pane>
-                                    <Pane prefHeight="405.0" prefWidth="288.0">
+                                    <Pane prefHeight="405.0" prefWidth="229.0">
                                        <children>
-                                          <Pane layoutY="5.0" prefHeight="388.0" prefWidth="286.0">
+                                          <Pane layoutY="5.0" prefHeight="388.0" prefWidth="233.0">
                                              <children>
-                                                <ImageView fx:id="img" fitHeight="403.0" fitWidth="287.0" pickOnBounds="true">
+                                                <ImageView fx:id="img" fitHeight="403.0" fitWidth="227.0" pickOnBounds="true">
                                                    <image>
                                                       <Image url="@../../images/Icons/Apex_legends_cover.jpg" />
                                                    </image>
@@ -176,7 +190,107 @@
                                           </Pane>
                                        </children>
                                     </Pane>
-                                    <Pane layoutX="766.0" layoutY="14.0" prefHeight="389.0" prefWidth="313.0" style="-fx-background-color: grey; -fx-background-radius: 20; -fx-background-color: #344464;" />
+                                    <Pane layoutX="600.0" layoutY="12.0" prefHeight="389.0" prefWidth="371.0" style="-fx-background-color: grey; -fx-background-radius: 20; -fx-background-color: #344464;">
+                                       <children>
+                                          <Label layoutX="62.0" layoutY="21.0" prefHeight="41.0" prefWidth="276.0" styleClass="text" stylesheets="@style.css" text="System Requirements">
+                                             <font>
+                                                <Font size="23.0" />
+                                             </font>
+                                          </Label>
+                                          <Line endX="889.888916015625" endY="-7.5379638671875" layoutX="-540.0" layoutY="67.0" startX="546.7929077148438" startY="-7.537932395935059" stroke="WHITE" />
+                                          <VBox layoutX="-1.0" layoutY="54.0" prefHeight="350.0" prefWidth="373.0">
+                                             <children>
+                                                <HBox prefHeight="53.0" prefWidth="373.0">
+                                                   <children>
+                                                      <Label prefHeight="41.0" prefWidth="56.0" styleClass="text" stylesheets="@style.css" text="CPU:">
+                                                         <font>
+                                                            <Font size="23.0" />
+                                                         </font>
+                                                      </Label>
+                                                      <Label fx:id="cpu" prefHeight="41.0" prefWidth="176.0" styleClass="text" stylesheets="@style.css" text="Intel i5-12400f">
+                                                         <font>
+                                                            <Font size="23.0" />
+                                                         </font>
+                                                         <HBox.margin>
+                                                            <Insets left="130.0" />
+                                                         </HBox.margin>
+                                                      </Label>
+                                                   </children>
+                                                   <VBox.margin>
+                                                      <Insets top="10.0" />
+                                                   </VBox.margin>
+                                                </HBox>
+                                                <HBox layoutX="10.0" layoutY="20.0" prefHeight="53.0" prefWidth="373.0">
+                                                   <children>
+                                                      <Label prefHeight="41.0" prefWidth="56.0" styleClass="text" stylesheets="@style.css" text="RAM:">
+                                                         <font>
+                                                            <Font size="23.0" />
+                                                         </font>
+                                                      </Label>
+                                                      <Label fx:id="ram" prefHeight="41.0" prefWidth="56.0" styleClass="text" stylesheets="@style.css" text="1GB">
+                                                         <font>
+                                                            <Font size="23.0" />
+                                                         </font>
+                                                         <HBox.margin>
+                                                            <Insets left="250.0" />
+                                                         </HBox.margin>
+                                                      </Label>
+                                                   </children>
+                                                </HBox>
+                                                <HBox layoutX="10.0" layoutY="73.0" prefHeight="53.0" prefWidth="373.0">
+                                                   <children>
+                                                      <Label prefHeight="41.0" prefWidth="327.0" styleClass="text" stylesheets="@style.css" text="Graphics Card::">
+                                                         <font>
+                                                            <Font size="23.0" />
+                                                         </font>
+                                                      </Label>
+                                                      <Label fx:id="card" prefHeight="41.0" prefWidth="253.0" styleClass="text" stylesheets="@style.css" text="RTX 3060">
+                                                         <font>
+                                                            <Font size="23.0" />
+                                                         </font>
+                                                         <HBox.margin>
+                                                            <Insets left="40.0" />
+                                                         </HBox.margin>
+                                                      </Label>
+                                                   </children>
+                                                </HBox>
+                                                <HBox layoutX="10.0" layoutY="127.0" prefHeight="53.0" prefWidth="373.0">
+                                                   <children>
+                                                      <Label prefHeight="41.0" prefWidth="111.0" styleClass="text" stylesheets="@style.css" text="Storage:">
+                                                         <font>
+                                                            <Font size="23.0" />
+                                                         </font>
+                                                      </Label>
+                                                      <Label fx:id="storage" prefHeight="41.0" prefWidth="62.0" styleClass="text" stylesheets="@style.css" text="50GB">
+                                                         <font>
+                                                            <Font size="23.0" />
+                                                         </font>
+                                                         <HBox.margin>
+                                                            <Insets left="180.0" />
+                                                         </HBox.margin>
+                                                      </Label>
+                                                   </children>
+                                                </HBox>
+                                                <HBox layoutX="10.0" layoutY="180.0" prefHeight="53.0" prefWidth="373.0">
+                                                   <children>
+                                                      <Label prefHeight="41.0" prefWidth="183.0" styleClass="text" stylesheets="@style.css" text="Age Restriction:">
+                                                         <font>
+                                                            <Font size="23.0" />
+                                                         </font>
+                                                      </Label>
+                                                      <Label fx:id="ageRestriction" prefHeight="41.0" prefWidth="33.0" styleClass="text" stylesheets="@style.css" text="13">
+                                                         <font>
+                                                            <Font size="23.0" />
+                                                         </font>
+                                                         <HBox.margin>
+                                                            <Insets left="130.0" />
+                                                         </HBox.margin>
+                                                      </Label>
+                                                   </children>
+                                                </HBox>
+                                             </children>
+                                          </VBox>
+                                       </children></Pane>
                                  </children>
                               </Pane>
                               <Label layoutX="48.0" layoutY="490.0" styleClass="text" stylesheets="@style.css" text="Screenshots">

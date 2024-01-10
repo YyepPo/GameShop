@@ -35,8 +35,25 @@ public class CardController implements Initializable {
     private ArrayList<String> screenshots;
 
 
+    private int AgeRestriction;
+    private String Cpu;
+    private int Ram;
+    private int Storage;
+    private String Card;
+
+    @FXML
+    private Label ageRestriction;
+    @FXML
+    private Label cpu;
+    @FXML
+    private Label ram;
+    @FXML
+    private Label storage;
+    @FXML
+    private Label card;
+
     boolean bIsFromProfile;
-    public void SetData(BaseGame game,boolean bIsFromProfile)
+    public void SetData(VideoGame game,boolean bIsFromProfile)
     {
         this.game = game;
         InputStream is = getClass().getResourceAsStream("..\\..\\images\\Icons\\New Project.jpg");
@@ -52,21 +69,25 @@ public class CardController implements Initializable {
         gameReleaseDate = game.GetGameReleaseDate();
         gameDescription = game.GetGameDesc();
         screenshots = game.GetScreenShots();
-
+        AgeRestriction = game.GetAgeRestriction();
+        Cpu = game.GetSystemRequirement().processor;
+        Ram = game.GetSystemRequirement().memory;
+        Storage = game.GetSystemRequirement().storage;
+        Card = game.GetSystemRequirement().graphicsCard;
         this.bIsFromProfile = bIsFromProfile;
     }
 
-    private Stage stage;
-    private Scene scene;
-    private Parent root;
     @FXML
     void productPressed(MouseEvent event) throws IOException
     {
+        Stage stage;
+        Scene scene;
+        Parent root;
+        //Check whether user clicked the product within profile page
+        //If true load BoughtProduct.fxml where user can download the product
         if(Test.GetIsInProfilePage())
         {
-            Stage stage;
-            Scene scene;
-            Parent root;
+
             FXMLLoader load = new FXMLLoader();
             load.setLocation(getClass().getResource("BoughtProduct.fxml"));
 
@@ -74,19 +95,16 @@ public class CardController implements Initializable {
 
             BoughtProductController boughtProductController = load.getController();
             boughtProductController.InitializeBoughtProductData(gameID,gameName.getText(),
-                    gamePrice.getText(),gameReleaseDate,gameDescription,screenshots);
+                    gamePrice.getText(),gameReleaseDate,gameDescription,screenshots,AgeRestriction,Cpu,Ram,Storage,Card);
 
             stage = (Stage)((Node)event.getSource()).getScene().getWindow();
             scene = new Scene(root);
             stage.setScene(scene);
             stage.show();
         }
-
-        if(!Test.GetIsInProfilePage())
+        else
         {
-            Stage stage;
-            Scene scene;
-            Parent root;
+            //If false load Product.fxml where user can purchase the product
             FXMLLoader load = new FXMLLoader();
             load.setLocation(getClass().getResource("Product.fxml"));
 
@@ -94,7 +112,7 @@ public class CardController implements Initializable {
 
             ProductController productController = load.getController();
             productController.InitializeData(gameID,gameName.getText(),
-                    gamePrice.getText(),gameReleaseDate,gameDescription,screenshots);
+                    gamePrice.getText(),gameReleaseDate,gameDescription,screenshots,AgeRestriction,Cpu,Ram,Storage,Card);
 
             stage = (Stage)((Node)event.getSource()).getScene().getWindow();
             scene = new Scene(root);

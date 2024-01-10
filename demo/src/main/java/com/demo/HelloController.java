@@ -36,7 +36,7 @@ public class HelloController implements Initializable {
     @FXML
     private Label profileName;
 
-    private List<BaseGame> games;
+    private List<VideoGame> games;
 
     private static int gameCounter = 0;
 
@@ -59,6 +59,8 @@ public class HelloController implements Initializable {
 
     Connection connection;
     Statement statement;
+
+    SceneManager sceneManager;
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle)
     {
@@ -83,7 +85,7 @@ public class HelloController implements Initializable {
         profileLine.setVisible(false);
 
         try {
-            games = new ArrayList<BaseGame>(GetGames());
+            games = new ArrayList<VideoGame>(GetGames());
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -98,7 +100,7 @@ public class HelloController implements Initializable {
 
         gameCardNumber.setText("Games: " + Integer.toString(gameCounter));
         try {
-            for (BaseGame game : games) {
+            for (VideoGame game : games) {
                 FXMLLoader fxmlLoader = new FXMLLoader();
                 fxmlLoader.setLocation(getClass().getResource("Card.fxml"));
 
@@ -120,6 +122,8 @@ public class HelloController implements Initializable {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+
+        sceneManager = SceneManager.getInstance();
     }
 
     public void SetHelloControllerData()
@@ -127,8 +131,10 @@ public class HelloController implements Initializable {
         //profileName.setText(User.getUserName());
     }
 
-    private List<BaseGame> GetGames() throws SQLException {
-        List<BaseGame> baseGames = new ArrayList<BaseGame>();
+    private List<VideoGame> GetGames() throws SQLException {
+        //Get user's games and add those games into grid pane
+
+        List<VideoGame> baseGames = new ArrayList<VideoGame>();
         ResultSet set = statement.executeQuery("select * from game");
         while(set.next())
         {
@@ -145,7 +151,7 @@ public class HelloController implements Initializable {
             final int memory = set.getInt(10);
             final String graphicsCard = set.getString(11);
             final int storage = set.getInt(12);
-
+            final String cpu = set.getString(16);
             final String ss1 = set.getString(13);
             final String ss2 = set.getString(14);
             final String ss3 = set.getString(15);
@@ -157,7 +163,7 @@ public class HelloController implements Initializable {
 
             AddGameCard(gameID,gameTitle,img,description
                     ,gamePrice,gameGenre,screenshots,16,
-                    operatingSystem,"i5 12400f",memory,graphicsCard,
+                    operatingSystem,cpu,memory,graphicsCard,
                     releaseDate,storage, baseGames);
         }
         return baseGames;
@@ -165,7 +171,7 @@ public class HelloController implements Initializable {
 
     private void AddGameCard(int id,String name, String gameImg, String gameDesc, double gamePrice, String gameType,
                              ArrayList<String> screenShots, int ageRestriction, String operationSystem,String processor,
-                             int memory,String graphicsCard,String gameReleaseDate,int storage,List<BaseGame> gameCards
+                             int memory,String graphicsCard,String gameReleaseDate,int storage,List<VideoGame> gameCards
                              )
     {
         VideoGame game = new VideoGame(id,name,gameImg,gameDesc,gamePrice,gameType,screenShots,ageRestriction,operationSystem,processor,
@@ -175,13 +181,8 @@ public class HelloController implements Initializable {
     }
 
     @FXML
-    void OnHomeButtonPressed(MouseEvent event)
-    {
-        if(bIsUserInHomePage)
-        {
-            System.out.println("User is already in home page");
-            return;
-        }
+    void OnHomeButtonPressed(MouseEvent event) throws IOException {
+        sceneManager.LoadScene(event,"hello-view.fxml");
     }
 
     public void SetHelloControllerData(boolean isInProfilePage)
@@ -193,19 +194,8 @@ public class HelloController implements Initializable {
     @FXML
     void OnProfileButtonPressed(MouseEvent event) throws IOException
     {
-        //Load profile page
+        //Load profile.fxml scene
         Test.SetIsInProfilePage(true);
-         Stage stage;
-         Scene scene;
-         Parent root;
-
-        FXMLLoader load = new FXMLLoader();
-        load.setLocation(getClass().getResource("profile.fxml"));
-        root = load.load();
-
-        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+        sceneManager.LoadScene(event,"profile.fxml");
     }
 }

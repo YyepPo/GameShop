@@ -1,6 +1,7 @@
 package com.demo;
 
 import com.mysql.cj.protocol.Resultset;
+import com.mysql.cj.protocol.ValueDecoder;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -50,13 +51,15 @@ public class ProfileController implements Initializable {
     Connection connection;
     Statement statement;
 
-    private ArrayList<BaseGame> games = new ArrayList<>();
+    private ArrayList<VideoGame> games = new ArrayList<>();
     private ArrayList<Integer> gameIds = new ArrayList<>();
 
     @FXML
     private ScrollPane gamesPane;
     @FXML
     private GridPane friendGrid;
+
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -105,13 +108,13 @@ public class ProfileController implements Initializable {
         }
 
         try {
-            games = new ArrayList<BaseGame>(GetGames());
+            games = new ArrayList<VideoGame>(GetGames());
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
 
         try {
-            for (BaseGame game : games) {
+            for (VideoGame game : games) {
                 FXMLLoader fxmlLoader = new FXMLLoader();
                 fxmlLoader.setLocation(getClass().getResource("Card.fxml"));
 
@@ -153,9 +156,9 @@ public class ProfileController implements Initializable {
         stage.show();
     }
 
-    private List<BaseGame> GetGames() throws SQLException {
+    private List<VideoGame> GetGames() throws SQLException {
 
-        List<BaseGame> baseGames = new ArrayList<BaseGame>();
+        List<VideoGame> baseGames = new ArrayList<VideoGame>();
 
         for (int i = 0; i < gameIds.size(); i++) {
             ResultSet set = statement.executeQuery("select * from game where game_ID="+gameIds.get(i));
@@ -174,6 +177,7 @@ public class ProfileController implements Initializable {
                 final int memory = set.getInt(10);
                 final String graphicsCard = set.getString(11);
                 final int storage = set.getInt(12);
+                final String cpu = set.getString(16);
 
                 final String ss1 = set.getString(13);
                 final String ss2 = set.getString(14);
@@ -186,7 +190,7 @@ public class ProfileController implements Initializable {
 
                 AddGameCard(gameID,gameTitle,img,description
                         ,gamePrice,gameGenre,screenshots,16,
-                        operatingSystem,"i5 12400f",memory,graphicsCard,
+                        operatingSystem,cpu,memory,graphicsCard,
                         releaseDate,storage, baseGames);
             }
         }
@@ -196,7 +200,7 @@ public class ProfileController implements Initializable {
 
         private void AddGameCard(int id, String name, String gameImg, String gameDesc, double gamePrice, String gameType,
                              ArrayList<String> screenShots, int ageRestriction, String operationSystem, String processor,
-                             int memory, String graphicsCard, String gameReleaseDate, int storage, List<BaseGame> gameCards
+                             int memory, String graphicsCard, String gameReleaseDate, int storage, List<VideoGame> gameCards
     )
     {
         VideoGame game = new VideoGame(id,name,gameImg,gameDesc,gamePrice,gameType,screenShots,ageRestriction,operationSystem,processor,

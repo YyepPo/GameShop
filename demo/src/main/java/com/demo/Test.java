@@ -9,11 +9,11 @@ public class Test {
         bProfilePage = ProfilePage;
         if(bProfilePage)
         {
-            System.out.println("true");
+            System.out.println("User is in profile page");
         }
         else
         {
-            System.out.println("false");
+            System.out.println("User is outside of profile page");
         }
     }
 }
