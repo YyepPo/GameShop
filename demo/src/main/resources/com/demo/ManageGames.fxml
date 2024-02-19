@@ -16,7 +16,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1642.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.demo.HelloController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1642.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.demo.ManageGamesController">
    <children>
       <BorderPane layoutX="47.0" layoutY="136.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <left>
@@ -115,11 +115,11 @@
          <center>
             <Pane prefHeight="800.0" prefWidth="998.0" style="-fx-background-color: #27334B;" BorderPane.alignment="CENTER">
                <children>
-                  <VBox layoutX="-1.0" layoutY="-5.0" prefHeight="201.0" prefWidth="1202.0">
+                  <VBox layoutX="-1.0" layoutY="-5.0" prefHeight="124.0" prefWidth="1202.0">
                      <children>
-                        <VBox prefHeight="200.0" prefWidth="1217.0">
+                        <VBox prefHeight="159.0" prefWidth="1202.0">
                            <children>
-                              <Label prefHeight="112.0" prefWidth="1149.0" styleClass="text" stylesheets="@style.css" text="Game Shop" textFill="WHITE">
+                              <Label prefHeight="112.0" prefWidth="1149.0" styleClass="text" stylesheets="@style.css" text="Manage Games" textFill="WHITE">
                                  <font>
                                     <Font size="50.0" />
                                  </font>
@@ -132,23 +132,16 @@
                                     <Insets left="20.0" />
                                  </VBox.margin>
                               </Line>
-                              <Label fx:id="gameCardNumber" alignment="TOP_LEFT" layoutX="10.0" layoutY="10.0" prefHeight="68.0" prefWidth="1101.0" styleClass="text" stylesheets="@style.css" text="Games: 9999" textFill="WHITE">
-                                 <font>
-                                    <Font size="30.0" />
-                                 </font>
-                                 <VBox.margin>
-                                    <Insets left="20.0" />
-                                 </VBox.margin>
-                              </Label>
                            </children>
                         </VBox>
-                     </children></VBox>
-                  <ScrollPane layoutY="200.0" prefHeight="606.0" prefWidth="1185.0" stylesheets="@style.css" vbarPolicy="ALWAYS">
+                     </children>
+                  </VBox>
+                  <ScrollPane layoutX="10.0" layoutY="122.0" prefHeight="694.0" prefWidth="1185.0" stylesheets="@style.css" vbarPolicy="ALWAYS">
                      <content>
-                        <GridPane fx:id="gameGrid" prefHeight="0.0" prefWidth="0.0" style="-fx-background-color: 1C253A;">
-                          <rowConstraints>
-                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                          </rowConstraints>
+                        <GridPane fx:id="gameGrid" prefHeight="7.0" prefWidth="1.0" style="-fx-background-color: 1C253A;">
+                           <rowConstraints>
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                           </rowConstraints>
                         </GridPane>
                      </content>
                   </ScrollPane>

@@ -25,6 +25,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class FriendController implements Initializable {
@@ -76,7 +77,7 @@ public class FriendController implements Initializable {
     {
         int column = 0;
         int row = 1;
-
+        System.out.println("qweqewqe");
         //Create database link
         final String urll = "jdbc:mysql://localhost:3306/gameshop";
         final String username = "root";
@@ -197,12 +198,12 @@ public class FriendController implements Initializable {
 
     @FXML
     void OnHomeButtonPressed(MouseEvent event) throws IOException {
-        sceneManager.LoadScene(event,"hello-view.fxml");
+        sceneManager.LoadScene(event,getClass().getResource("hello-view.fxml"));
     }
 
     @FXML
     void OnProfileButtonPressed(MouseEvent event) throws IOException {
-        sceneManager.LoadScene(event,"profile.fxml");
+        sceneManager.LoadScene(event,getClass().getResource("profile.fxml"));
     }
 
     private void AddFriendToGrid(int id,String name,String imagePath,ArrayList<Friend> allFriends)

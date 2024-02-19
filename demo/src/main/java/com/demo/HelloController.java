@@ -34,6 +34,8 @@ public class HelloController implements Initializable {
     private Label gameCardNumber;
 
     @FXML
+    private Button adminButton;
+    @FXML
     private Label profileName;
 
     private List<VideoGame> games;
@@ -61,6 +63,8 @@ public class HelloController implements Initializable {
     Statement statement;
 
     SceneManager sceneManager;
+
+    //Initialize all the games(from data base) and add them into the game grid
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle)
     {
@@ -77,6 +81,10 @@ public class HelloController implements Initializable {
         } catch (ClassNotFoundException | SQLException e) {
             throw new RuntimeException(e);
         }
+
+        E_UserType userRole = User.IsAdmin(connection);
+
+        adminButton.setVisible(userRole == E_UserType.Admin);
 
         homeButton.setStyle("-fx-background-color: #4061A3");
         homeHBox.setStyle("-fx-background-color: #4061A3");
@@ -131,9 +139,8 @@ public class HelloController implements Initializable {
         //profileName.setText(User.getUserName());
     }
 
+    //Get game's properties from data base
     private List<VideoGame> GetGames() throws SQLException {
-        //Get user's games and add those games into grid pane
-
         List<VideoGame> baseGames = new ArrayList<VideoGame>();
         ResultSet set = statement.executeQuery("select * from game");
         while(set.next())
@@ -169,6 +176,7 @@ public class HelloController implements Initializable {
         return baseGames;
     }
 
+    //Create a new game card instance with the given parameters and add it to the gameCards array
     private void AddGameCard(int id,String name, String gameImg, String gameDesc, double gamePrice, String gameType,
                              ArrayList<String> screenShots, int ageRestriction, String operationSystem,String processor,
                              int memory,String graphicsCard,String gameReleaseDate,int storage,List<VideoGame> gameCards
@@ -180,22 +188,24 @@ public class HelloController implements Initializable {
         gameCards.add(game);
     }
 
+    ///
+    ///Event Listeners for buttons
+    ///
+
     @FXML
     void OnHomeButtonPressed(MouseEvent event) throws IOException {
-        sceneManager.LoadScene(event,"hello-view.fxml");
+        SceneManager.LoadScene(event,getClass().getResource("hello-view.fxml"));
     }
-
-    public void SetHelloControllerData(boolean isInProfilePage)
-    {
-        Test.SetIsInProfilePage(isInProfilePage);
-    }
-
-
     @FXML
     void OnProfileButtonPressed(MouseEvent event) throws IOException
     {
         //Load profile.fxml scene
         Test.SetIsInProfilePage(true);
-        sceneManager.LoadScene(event,"profile.fxml");
+        SceneManager.LoadScene(event,getClass().getResource("profile.fxml"));
+    }
+
+    @FXML
+    void OnAdminButtonPressed(MouseEvent event) throws IOException {
+        SceneManager.LoadScene(event,getClass().getResource("admin-panel.fxml"));
     }
 }

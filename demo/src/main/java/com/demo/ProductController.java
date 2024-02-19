@@ -32,7 +32,7 @@ public class ProductController implements Initializable {
     private Label gameName;
 
     @FXML
-    private Label dollarAmount;
+    private Label usersDollarAmount;
 
     @FXML
     private Button homeButton;
@@ -47,7 +47,7 @@ public class ProductController implements Initializable {
     private ImageView img;
 
     @FXML
-    private Label price;
+    private Label gamePrice;
 
     @FXML
     private Button profileButton;
@@ -63,8 +63,6 @@ public class ProductController implements Initializable {
 
     @FXML
     private Button buyButton;
-
-    BaseGame game;
 
     @FXML
     private ImageView ss1;
@@ -110,14 +108,14 @@ public class ProductController implements Initializable {
             throw new RuntimeException(e);
         }
 
-        dollarAmount.setText(String.valueOf(GetDollarAmountFromUser()));
+        usersDollarAmount.setText(String.valueOf(User.GetDollarAmount(conn)));
     }
     public void InitializeData(int id,String name, String price, String releaseDate, String gameDescription,
                                ArrayList<String> screenshots,int ageRestrcition,String cpu,int ram,int storage,String card)
     {
         gameID = id;
         gameName.setText(name);
-        this.price.setText(price);
+        gamePrice.setText(price);
         release.setText(releaseDate);
         description.setText(gameDescription);
         this.bFromProfile = bFromProfile;
@@ -144,18 +142,7 @@ public class ProductController implements Initializable {
     void OnHomeButtonPressed(MouseEvent event) throws IOException {
         //Load home page
         Test.SetIsInProfilePage(false);
-        FXMLLoader load = new FXMLLoader();
-
-        load.setLocation(getClass().getResource("hello-view.fxml"));
-        root = load.load();
-
-        HelloController controller = load.getController();
-        controller.SetHelloControllerData(false);
-
-        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+        SceneManager.LoadScene(event,getClass().getResource("hello-view.fxml"));
     }
 
     @FXML
@@ -164,7 +151,7 @@ public class ProductController implements Initializable {
 
         //Load profile.fxml scene
         SceneManager sceneManager = SceneManager.getInstance();
-        sceneManager.LoadScene(event,"profile.fxml");
+        sceneManager.LoadScene(event,getClass().getResource("profile.fxml"));
     }
 
     @FXML
@@ -183,23 +170,23 @@ public class ProductController implements Initializable {
         }
 
         //Check if user has enough coins to buy the game
-        if(User.GetAmount() < Double.valueOf(price.getText()))
+        if(User.GetAmount() < Double.valueOf(gamePrice.getText()))
         {
             System.out.println("User doesnt have enough money");
             return;
         }
 
-        double priceLabelToDouble = Double.parseDouble(price.getText());
-        float dollarAmount = (float) (GetDollarAmountFromUser() - priceLabelToDouble);
+        double priceLabelToDouble = Double.parseDouble(gamePrice.getText());
+        float dollarAmount = (float) (User.GetDollarAmount(conn) - priceLabelToDouble);
 
-        // Updates the 'dollarAmount' field in the 'user' table with the calculated value,
-        // sets the 'price' field text to the new dollar amount, and executes the SQL update statement.
+        //Updates the 'dollarAmount' field in the 'user' table with the calculated value,
+        //sets the 'price' field text to the new dollar amount, and executes the SQL update statement.
         String updateSql = "Update user set dollarAmount =" + dollarAmount +" where user_ID =" + User.GetUserID();
-        price.setText(String.valueOf(dollarAmount));
+        usersDollarAmount.setText(String.valueOf(dollarAmount));
         PreparedStatement updatePreparedStatement = conn.prepareStatement(updateSql);
         updatePreparedStatement.executeUpdate();
 
-        //Inserts a new record into the 'user_game' table associating the user (identified by user_id)
+        //0--Inserts a new record into the 'user_game' table associating the user (identified by user_id)
         // with a specific game (identified by game_id).
         String insertUser_gameSql ="INSERT INTO user_game (user_id, game_id) VALUES (?,?)";
         PreparedStatement preparedStatement = conn.prepareStatement(insertUser_gameSql);
@@ -207,31 +194,4 @@ public class ProductController implements Initializable {
         preparedStatement.setInt(2,gameID);
         preparedStatement.executeUpdate();
     }
-
-    @FXML
-    void BuyButtonHovered(MouseEvent event) {
-
-    }
-
-    private int GetDollarAmountFromUser()
-    {
-        int dollarAmount = 0;
-        String getDollarAmountSql = "select * from user where user_ID = " + User.GetUserID();
-        try {
-            PreparedStatement preparedStatement = conn.prepareStatement(getDollarAmountSql);
-            ResultSet set = preparedStatement.executeQuery();
-            if(set.next())
-            {
-                dollarAmount = set.getInt("dollarAmount");
-                return dollarAmount;
-            }
-        }
-        catch (SQLException e){
-            throw new RuntimeException("user_game data base error (ProductController initialize)");
-        }
-        return 0;
-    }
-
 }
-
-

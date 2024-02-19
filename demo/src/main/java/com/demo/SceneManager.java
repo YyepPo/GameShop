@@ -8,6 +8,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.net.URL;
 
 ///
 /// Singleton pattern
@@ -27,14 +28,14 @@ public class SceneManager {
         return instance;
     }
 
-    private Stage stage;
-    private Scene scene;
-    private Parent root;
-    public void LoadScene(MouseEvent event,String sceneName) throws IOException {
+    private static Stage stage;
+    private static Scene scene;
+    private static Parent root;
+    public static void LoadScene(MouseEvent event, URL url) throws IOException {
         FXMLLoader load = new FXMLLoader();
-        load.setLocation(getClass().getResource(sceneName));
+        load.setLocation(url);
         root = load.load();
-
+        //getClass().getResource(sceneName)
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setScene(scene);

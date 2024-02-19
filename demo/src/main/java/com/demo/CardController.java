@@ -34,7 +34,6 @@ public class CardController implements Initializable {
 
     private ArrayList<String> screenshots;
 
-
     private int AgeRestriction;
     private String Cpu;
     private int Ram;
@@ -83,12 +82,13 @@ public class CardController implements Initializable {
         Stage stage;
         Scene scene;
         Parent root;
-        //Check whether user clicked the product within profile page
+
+        //Check whether user clicked the product within the profile
         //If true load BoughtProduct.fxml where user can download the product
+        //If false load Product.fxml where user can purchase the product
+        FXMLLoader load = new FXMLLoader();
         if(Test.GetIsInProfilePage())
         {
-
-            FXMLLoader load = new FXMLLoader();
             load.setLocation(getClass().getResource("BoughtProduct.fxml"));
 
             root = load.load();
@@ -97,15 +97,9 @@ public class CardController implements Initializable {
             boughtProductController.InitializeBoughtProductData(gameID,gameName.getText(),
                     gamePrice.getText(),gameReleaseDate,gameDescription,screenshots,AgeRestriction,Cpu,Ram,Storage,Card);
 
-            stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-            scene = new Scene(root);
-            stage.setScene(scene);
-            stage.show();
         }
         else
         {
-            //If false load Product.fxml where user can purchase the product
-            FXMLLoader load = new FXMLLoader();
             load.setLocation(getClass().getResource("Product.fxml"));
 
             root = load.load();
@@ -114,17 +108,15 @@ public class CardController implements Initializable {
             productController.InitializeData(gameID,gameName.getText(),
                     gamePrice.getText(),gameReleaseDate,gameDescription,screenshots,AgeRestriction,Cpu,Ram,Storage,Card);
 
-            stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-            scene = new Scene(root);
-            stage.setScene(scene);
-            stage.show();
         }
-
-
+        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
     }
 
     @Override
-    public void initialize(URL url, ResourceBundle resourceBundle)
-    {
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+
     }
 }

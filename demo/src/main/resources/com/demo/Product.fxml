@@ -93,7 +93,7 @@
                                     <Font size="50.0" />
                                  </font>
                               </Label>
-                              <Label fx:id="dollarAmount" layoutX="723.0" layoutY="10.0" prefHeight="118.0" prefWidth="147.0" styleClass="text" stylesheets="@style.css" text="99.99" textFill="WHITE">
+                              <Label fx:id="usersDollarAmount" layoutX="723.0" layoutY="10.0" prefHeight="118.0" prefWidth="147.0" styleClass="text" stylesheets="@style.css" text="99.99" textFill="WHITE">
                                  <font>
                                     <Font size="50.0" />
                                  </font>
@@ -156,7 +156,7 @@
                                                             <Insets left="10.0" />
                                                          </HBox.margin>
                                                       </Label>
-                                                      <Label fx:id="price" alignment="CENTER_RIGHT" layoutX="10.0" layoutY="10.0" prefHeight="109.0" prefWidth="86.0" styleClass="text" stylesheets="@style.css" text="99.99$">
+                                                      <Label fx:id="gamePrice" alignment="CENTER_RIGHT" layoutX="10.0" layoutY="10.0" prefHeight="109.0" prefWidth="86.0" styleClass="text" stylesheets="@style.css" text="99.99$">
                                                          <font>
                                                             <Font size="23.0" />
                                                          </font>
@@ -170,7 +170,7 @@
                                                 </Line>
                                              </children>
                                           </VBox>
-                                          <Button fx:id="buyButton" layoutX="117.0" layoutY="304.0" mnemonicParsing="false" onMouseEntered="#BuyButtonHovered" onMousePressed="#buy" prefHeight="51.0" prefWidth="154.0" style="-fx-background-color: #212F4B;" styleClass="text" stylesheets="@style.css" text="Buy" textFill="WHITE">
+                                          <Button fx:id="buyButton" layoutX="117.0" layoutY="304.0" mnemonicParsing="false" onMousePressed="#buy" prefHeight="51.0" prefWidth="154.0" style="-fx-background-color: #212F4B;" styleClass="text" stylesheets="@style.css" text="Buy" textFill="WHITE">
                                              <font>
                                                 <Font size="22.0" />
                                              </font>

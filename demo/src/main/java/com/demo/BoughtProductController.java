@@ -137,14 +137,14 @@ public class BoughtProductController implements Initializable {
     void OnHomeButtonPressed(MouseEvent event) throws IOException {
         //Load hello-view.fxml scene
         Test.SetIsInProfilePage(false);
-        sceneManager.LoadScene(event,"hello-view.fxml");
+        sceneManager.LoadScene(event,getClass().getResource("hello-view.fxml"));
     }
 
     @FXML
     void OnProfileButtonPressed(MouseEvent event) throws IOException {
         //Load profile.fxml scene
         Test.SetIsInProfilePage(true);
-        sceneManager.LoadScene(event,"profile.fxml");
+        sceneManager.LoadScene(event,getClass().getResource("profile.fxml"));
     }
 
     @FXML
