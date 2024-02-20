@@ -21,22 +21,8 @@ public class ManageGameCard implements Initializable {
 
     private int gameID;
 
-    Connection connection;
-    Statement statement;
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        final String urll = "jdbc:mysql://localhost:3306/gameshop";
-        final String username = "root";
-        final String password = "";
-        try
-        {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            connection = DriverManager.getConnection(urll,username,password);
-            statement = connection.createStatement();
-        } catch (ClassNotFoundException | SQLException e) {
-            throw new RuntimeException(e);
-        }
     }
 
     public void SetData(GameCard game)
@@ -49,22 +35,19 @@ public class ManageGameCard implements Initializable {
 
     @FXML
     void OnDeleteGameClicked(MouseEvent event) throws SQLException {
-
-    }
-
-    @FXML
-    void OnEditGameClicked(MouseEvent event) throws SQLException {
-        System.out.println("Edit game");
         System.out.println("Delete game");
         String sql = "Delete from game where game_ID = ?" ;
-        PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        PreparedStatement preparedStatement = DataBaseConnection.getConnection().prepareStatement(sql);
         preparedStatement.setInt(1,gameID);
         int affectedRow = preparedStatement.executeUpdate();
         if(affectedRow > 0)
         {
-            System.out.println("Row affected");
+            System.out.println("Game with id " + gameID + " has been deleted");
         }
     }
 
+    @FXML
+    void OnEditGameClicked(MouseEvent event) throws SQLException {
 
+    }
 }

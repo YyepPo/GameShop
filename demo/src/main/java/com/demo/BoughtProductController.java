@@ -76,9 +76,6 @@ public class BoughtProductController implements Initializable {
 
     private int gameID;
 
-    private Statement st;
-    private Connection conn;
-
     @FXML
     private Label ageRestriction;
     @FXML
@@ -90,24 +87,11 @@ public class BoughtProductController implements Initializable {
     @FXML
     private Label card;
 
-    private SceneManager sceneManager;
+    //private SceneManager sceneManager;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        final String urll = "jdbc:mysql://localhost:3306/gameshop";
-        final String usernamee = "root";
-        final String passwordd = "";
 
-        try
-        {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            conn  = DriverManager.getConnection(urll,usernamee,passwordd);
-            st = conn.createStatement();
-        } catch (ClassNotFoundException | SQLException e) {
-            throw new RuntimeException(e);
-        }
-
-        sceneManager = SceneManager.getInstance();
     }
     public void InitializeBoughtProductData(int id,String name, String price, String releaseDate, String gameDescription,
                                             ArrayList<String> screenshots,int ageRestrcition,String cpu,int ram,int storage,String card)
@@ -137,14 +121,14 @@ public class BoughtProductController implements Initializable {
     void OnHomeButtonPressed(MouseEvent event) throws IOException {
         //Load hello-view.fxml scene
         Test.SetIsInProfilePage(false);
-        sceneManager.LoadScene(event,getClass().getResource("hello-view.fxml"));
+        SceneManager.LoadScene(event,getClass().getResource("hello-view.fxml"));
     }
 
     @FXML
     void OnProfileButtonPressed(MouseEvent event) throws IOException {
         //Load profile.fxml scene
         Test.SetIsInProfilePage(true);
-        sceneManager.LoadScene(event,getClass().getResource("profile.fxml"));
+        SceneManager.LoadScene(event,getClass().getResource("profile.fxml"));
     }
 
     @FXML

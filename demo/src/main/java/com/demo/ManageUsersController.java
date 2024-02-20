@@ -16,18 +16,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class ManageGamesController implements Initializable {
+public class ManageUsersController  implements Initializable {
 
+    private List<UserCard> userCards;
     @FXML
     private GridPane gameGrid;
-
-    private List<GameCard> gameCards;
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
         try {
-            gameCards = new ArrayList<GameCard>(GetGameCards());
+            userCards = new ArrayList<>(GetUserCards());
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -35,14 +33,14 @@ public class ManageGamesController implements Initializable {
         int row = 1;
 
         try {
-            for (GameCard game : gameCards) {
+            for (UserCard user : userCards) {
                 FXMLLoader fxmlLoader = new FXMLLoader();
-                fxmlLoader.setLocation(getClass().getResource("ManageGameCard.fxml"));
+                fxmlLoader.setLocation(getClass().getResource("EditUser.fxml"));
 
                 AnchorPane pane = fxmlLoader.load();
 
-                ManageGameCard cardController = fxmlLoader.getController();
-                cardController.SetData(game);
+                EditUserCard userCard = fxmlLoader.getController();
+                userCard.SetData(user);
 
                 gameGrid.add(pane,0,++row);
                 GridPane.setMargin(pane,new Insets(20));
@@ -52,46 +50,23 @@ public class ManageGamesController implements Initializable {
         }
     }
 
-    private List<GameCard> GetGameCards() throws SQLException
-    {
-        List<GameCard> allGameCards = new ArrayList<GameCard>();
-        ResultSet set = DataBaseConnection.getStatement().executeQuery("select * from game");
+    private List<UserCard> GetUserCards() throws SQLException {
+        List<UserCard> allUserCards = new ArrayList<UserCard>();
+        ResultSet set = DataBaseConnection.getStatement().executeQuery("select * from user");
         while(set.next()) {
-            final int ID = set.getInt(1);
-            final String title = set.getString(2);
+            final int Id = set.getInt(1);
+            final String username = set.getString(2);
             final String image = set.getString(7);
-            AddGameCard(ID,title,image,allGameCards);
+            AddUserCard(Id,username,image,allUserCards);
         }
-
-        return allGameCards;
+        return allUserCards;
     }
 
-    private void AddGameCard(final int ID,final String title,final String image,List<GameCard> cards)
+    private void AddUserCard(final int ID,final String username,final String image,List<UserCard> allUserCards)
     {
-        GameCard gameCard = new GameCard(ID,title,image);
-        cards.add(gameCard);
+        UserCard userCard = new UserCard(ID,username,image);
+        allUserCards.add(userCard);
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     @FXML
     void OnAdminButtonPressed(MouseEvent event) throws IOException {
@@ -101,12 +76,13 @@ public class ManageGamesController implements Initializable {
     @FXML
     void OnHomeButtonPressed(MouseEvent event) throws IOException {
         SceneManager.LoadScene(event,getClass().getResource("hello-view.fxml"));
+
     }
 
     @FXML
     void OnProfileButtonPressed(MouseEvent event) throws IOException {
         SceneManager.LoadScene(event,getClass().getResource("profile.fxml"));
-    }
 
+    }
 
 }

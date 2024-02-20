@@ -88,10 +88,4 @@ public class BaseGame {
         screenShots.add(screenShotSrc);
 
     }
-
-    public static void main(String[] args)
-    {
-
-    }
-
 }

@@ -75,10 +75,7 @@ public class ProductController implements Initializable {
 
     private int gameID;
 
-    private Statement st;
-    private Connection conn;
-
-    boolean bFromProfile;
+      boolean bFromProfile;
 
 
     @FXML
@@ -94,21 +91,7 @@ public class ProductController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        //Create database
-        final String urll = "jdbc:mysql://localhost:3306/gameshop";
-        final String usernamee = "root";
-        final String passwordd = "";
-
-        try
-        {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            conn  = DriverManager.getConnection(urll,usernamee,passwordd);
-            st = conn.createStatement();
-        } catch (ClassNotFoundException | SQLException e) {
-            throw new RuntimeException(e);
-        }
-
-        usersDollarAmount.setText(String.valueOf(User.GetDollarAmount(conn)));
+                usersDollarAmount.setText(String.valueOf(User.GetDollarAmount(DataBaseConnection.getConnection())));
     }
     public void InitializeData(int id,String name, String price, String releaseDate, String gameDescription,
                                ArrayList<String> screenshots,int ageRestrcition,String cpu,int ram,int storage,String card)
@@ -162,7 +145,7 @@ public class ProductController implements Initializable {
                 " AND user_id = " + User.GetUserID() +
                 " AND EXISTS (SELECT 1 FROM user_game WHERE user_id = " + User.GetUserID() + ")";
 
-        ResultSet set = st.executeQuery(query);
+        ResultSet set = DataBaseConnection.getStatement().executeQuery(query);
         if(set.next())
         {
             System.out.println("Player already owns the game");
@@ -177,19 +160,19 @@ public class ProductController implements Initializable {
         }
 
         double priceLabelToDouble = Double.parseDouble(gamePrice.getText());
-        float dollarAmount = (float) (User.GetDollarAmount(conn) - priceLabelToDouble);
+        float dollarAmount = (float) (User.GetDollarAmount(DataBaseConnection.getConnection()) - priceLabelToDouble);
 
         //Updates the 'dollarAmount' field in the 'user' table with the calculated value,
         //sets the 'price' field text to the new dollar amount, and executes the SQL update statement.
         String updateSql = "Update user set dollarAmount =" + dollarAmount +" where user_ID =" + User.GetUserID();
         usersDollarAmount.setText(String.valueOf(dollarAmount));
-        PreparedStatement updatePreparedStatement = conn.prepareStatement(updateSql);
+        PreparedStatement updatePreparedStatement = DataBaseConnection.getConnection().prepareStatement(updateSql);
         updatePreparedStatement.executeUpdate();
 
         //0--Inserts a new record into the 'user_game' table associating the user (identified by user_id)
         // with a specific game (identified by game_id).
         String insertUser_gameSql ="INSERT INTO user_game (user_id, game_id) VALUES (?,?)";
-        PreparedStatement preparedStatement = conn.prepareStatement(insertUser_gameSql);
+        PreparedStatement preparedStatement = DataBaseConnection.getConnection().prepareStatement(insertUser_gameSql);
         preparedStatement.setInt(1,User.GetUserID());
         preparedStatement.setInt(2,gameID);
         preparedStatement.executeUpdate();

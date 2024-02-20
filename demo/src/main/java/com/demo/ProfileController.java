@@ -48,9 +48,6 @@ public class ProfileController implements Initializable {
     @FXML
     private GridPane gameGrid;
 
-    Connection connection;
-    Statement statement;
-
     private ArrayList<VideoGame> games = new ArrayList<>();
     private ArrayList<Integer> gameIds = new ArrayList<>();
 
@@ -74,18 +71,6 @@ public class ProfileController implements Initializable {
         int column = 0;
         int row = 1;
 
-        final String urll = "jdbc:mysql://localhost:3306/gameshop";
-        final String username = "root";
-        final String password = "";
-        try
-        {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            connection = DriverManager.getConnection(urll,username,password);
-            statement = connection.createStatement();
-        } catch (ClassNotFoundException | SQLException e) {
-            throw new RuntimeException(e);
-        }
-
         String sql = "SELECT u.username, g.game_ID " +
                 "FROM user u " +
                 "JOIN user_game ug ON u.user_ID = ug.user_id " +
@@ -93,7 +78,7 @@ public class ProfileController implements Initializable {
                 "WHERE u.username = ?";
 
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            PreparedStatement preparedStatement = DataBaseConnection.getConnection().prepareStatement(sql);
             preparedStatement.setString(1,User.getUserName());
 
             ResultSet results = preparedStatement.executeQuery();
@@ -161,7 +146,7 @@ public class ProfileController implements Initializable {
         List<VideoGame> baseGames = new ArrayList<VideoGame>();
 
         for (int i = 0; i < gameIds.size(); i++) {
-            ResultSet set = statement.executeQuery("select * from game where game_ID="+gameIds.get(i));
+            ResultSet set = DataBaseConnection.getStatement().executeQuery("select * from game where game_ID="+gameIds.get(i));
             while(set.next())
             {
                 final int gameID = set.getInt(1);
@@ -209,21 +194,10 @@ public class ProfileController implements Initializable {
         gameCards.add(game);
     }
 
-    private Stage stage;
-    private Scene scene;
-    private Parent root;
-
     @FXML
     void OnFriendButtonPressed(MouseEvent event) throws IOException
     {
-        FXMLLoader load = new FXMLLoader();
-        load.setLocation(getClass().getResource("Friend.fxml"));
-        root = load.load();
-
-        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+        SceneManager.LoadScene(event,getClass().getResource("Friend.fxml"));
     }
 
 

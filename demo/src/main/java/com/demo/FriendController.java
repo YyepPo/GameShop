@@ -68,27 +68,12 @@ public class FriendController implements Initializable {
 
     private ArrayList<Integer> friendIDs = new ArrayList<>();
     private ArrayList<Friend> friends = new ArrayList<>();
-    Connection connection;
-
-    SceneManager sceneManager;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle)
     {
         int column = 0;
         int row = 1;
-        System.out.println("qweqewqe");
-        //Create database link
-        final String urll = "jdbc:mysql://localhost:3306/gameshop";
-        final String username = "root";
-        final String password = "";
-        try
-        {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            connection = DriverManager.getConnection(urll,username,password);
-        } catch (ClassNotFoundException | SQLException e) {
-            throw new RuntimeException(e);
-        }
 
         //Find and retrieve the user IDs of friends for a
         //given username from a database, employing JOIN operations and PreparedStatement for
@@ -99,7 +84,7 @@ public class FriendController implements Initializable {
                 "join user u2 on u2.user_ID = uf.friend_ID " +
                 "Where u1.username = ?";
         try {
-            PreparedStatement statement = connection.prepareStatement(sql);
+            PreparedStatement statement = DataBaseConnection.getConnection().prepareStatement(sql);
             statement.setString(1,User.getUserName());
 
             ResultSet set = statement.executeQuery();
@@ -146,8 +131,6 @@ public class FriendController implements Initializable {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
-        sceneManager = SceneManager.getInstance();
     }
 
     private ArrayList<Friend> GetFriends() throws SQLException {
@@ -155,7 +138,7 @@ public class FriendController implements Initializable {
 
         for (int i = 0; i < friendIDs.size(); i++)
         {
-            Statement statement = connection.createStatement();
+            Statement statement = DataBaseConnection.getConnection().createStatement();
             ResultSet set = statement.executeQuery("select * from user where user_ID = " + friendIDs.get(i));
             while(set.next())
             {
@@ -167,11 +150,9 @@ public class FriendController implements Initializable {
         }
         return allFriends;
     }
-
-
     @FXML
     void AddFriendEvent(MouseEvent event) throws SQLException   {
-        Statement statement = connection.createStatement();
+        Statement statement = DataBaseConnection.getConnection().createStatement();
         //Check whether the given friend username exists
         //If it does then add that friend
         String sql = "select * from user where username = '" + addFriendTextField.getText() +"';";
@@ -179,7 +160,7 @@ public class FriendController implements Initializable {
         if(result.next())
         {
             String insert = "INSERT INTO user_friend(user_ID,friend_ID) VALUES (?,?)";
-            PreparedStatement preparedStatement = connection.prepareStatement(insert);
+            PreparedStatement preparedStatement = DataBaseConnection.getConnection().prepareStatement(insert);
             preparedStatement.setInt(1,User.GetUserID());
             preparedStatement.setInt(2,result.getInt("user_ID"));
             preparedStatement.executeUpdate();
@@ -198,12 +179,12 @@ public class FriendController implements Initializable {
 
     @FXML
     void OnHomeButtonPressed(MouseEvent event) throws IOException {
-        sceneManager.LoadScene(event,getClass().getResource("hello-view.fxml"));
+        SceneManager.LoadScene(event,getClass().getResource("hello-view.fxml"));
     }
 
     @FXML
     void OnProfileButtonPressed(MouseEvent event) throws IOException {
-        sceneManager.LoadScene(event,getClass().getResource("profile.fxml"));
+        SceneManager.LoadScene(event,getClass().getResource("profile.fxml"));
     }
 
     private void AddFriendToGrid(int id,String name,String imagePath,ArrayList<Friend> allFriends)

@@ -59,30 +59,13 @@ public class HelloController implements Initializable {
 
     boolean bIsUserInHomePage = true;
 
-    Connection connection;
-    Statement statement;
-
-    SceneManager sceneManager;
-
     //Initialize all the games(from data base) and add them into the game grid
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle)
     {
         gameCounter = 0;
 
-        final String urll = "jdbc:mysql://localhost:3306/gameshop";
-        final String username = "root";
-        final String password = "";
-        try
-        {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            connection = DriverManager.getConnection(urll,username,password);
-            statement = connection.createStatement();
-        } catch (ClassNotFoundException | SQLException e) {
-            throw new RuntimeException(e);
-        }
-
-        E_UserType userRole = User.IsAdmin(connection);
+        E_UserType userRole = User.IsAdmin(DataBaseConnection.getConnection());
 
         adminButton.setVisible(userRole == E_UserType.Admin);
 
@@ -130,8 +113,6 @@ public class HelloController implements Initializable {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
-        sceneManager = SceneManager.getInstance();
     }
 
     public void SetHelloControllerData()
@@ -142,7 +123,7 @@ public class HelloController implements Initializable {
     //Get game's properties from data base
     private List<VideoGame> GetGames() throws SQLException {
         List<VideoGame> baseGames = new ArrayList<VideoGame>();
-        ResultSet set = statement.executeQuery("select * from game");
+        ResultSet set = DataBaseConnection.getStatement().executeQuery("select * from game");
         while(set.next())
         {
             final int gameID = set.getInt(1);

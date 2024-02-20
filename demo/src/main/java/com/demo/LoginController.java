@@ -17,6 +17,9 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
+import javax.xml.crypto.Data;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 public class LoginController implements Initializable
 {
     @FXML
@@ -48,26 +51,14 @@ public class LoginController implements Initializable
 
     @FXML
     private TextField registerImagePath;
-
-
+    @FXML
+    private TextField registerDollarAmount;
     boolean bUserNameExists = false;
     boolean bPasswordExists = false;
 
-    Connection connection;
-    Statement statement;
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        final String urll = "jdbc:mysql://localhost:3306/gameshop";
-        final String username = "root";
-        final String password = "";
-        try
-        {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            connection = DriverManager.getConnection(urll,username,password);
-            statement = connection.createStatement();
-        } catch (ClassNotFoundException | SQLException e) {
-            throw new RuntimeException(e);
-        }
+        DataBaseConnection.CreateConnectionWithDB();
     }
 
     @FXML
@@ -79,19 +70,6 @@ public class LoginController implements Initializable
 
     @FXML
     void login(MouseEvent event) throws SQLException, ClassNotFoundException, IOException {
-        final String urll = "jdbc:mysql://localhost:3306/gameshop";
-        final String usernamee = "root";
-        final String passwordd = "";
-        Statement st;
-        Connection conn;
-        try
-        {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            conn  = DriverManager.getConnection(urll,usernamee,passwordd);
-            st = conn.createStatement();
-        } catch (ClassNotFoundException | SQLException e) {
-            throw new RuntimeException(e);
-        }
 
         if(!AreInputFieldsValid())
         {
@@ -99,22 +77,23 @@ public class LoginController implements Initializable
             return;
         }
 
-        String a = password.getText();
-        int stringPasswordToIntPassword = Integer.parseInt(a);
-        ResultSet usernamePasswordResult = st.executeQuery("select * from user where username ="+"'"+username.getText()+"' and password="+stringPasswordToIntPassword);
-        while(usernamePasswordResult.next())
+        /*String enteredPassword = password.getText();
+        String hashedEnteredPassword = hashPassword(enteredPassword);
+        System.out.println(hashedEnteredPassword);
+        ResultSet usernamePasswordResult = DataBaseConnection.getStatement().executeQuery("select * from user where username ="+"'"+username.getText()+"' and password="+hashedEnteredPassword);
+        if(usernamePasswordResult.next())
         {
-            if(usernamePasswordResult.getInt(3) == stringPasswordToIntPassword &&
+            String hashedPasswordFromDatabase = usernamePasswordResult.getString("password");
+            if(usernamePasswordResult.getString(3).equals(hashedPasswordFromDatabase)  &&
                 usernamePasswordResult.getString(2).equals(username.getText()))
             {
-                ResultSet set = statement.executeQuery("select user_ID from user where username="+"'"+username.getText()+"'");
-                while(set.next())
+                ResultSet set = DataBaseConnection.getStatement().executeQuery("select user_ID from user where username="+"'"+username.getText()+"'");
+                if(set.next())
                 {
                     User.SetUserID(set.getInt(1));
                     System.out.println(set.getInt(1));
-                    break;
                 }
-                conn.close();
+                //conn.close();
                 User.setUserName(username.getText());
 
                 FXMLLoader loader = new FXMLLoader();
@@ -127,8 +106,47 @@ public class LoginController implements Initializable
                 Scene scene = new Scene(root);
                 stage.setScene(scene);
                 stage.show();
-                break;
             }
+        }*/
+        try {
+            String usernameValue = username.getText();
+            String passwordValue = password.getText();
+            String hashedPassword = hashPassword(passwordValue);
+
+            String query = "SELECT user_ID,password FROM user WHERE username = ?";
+            PreparedStatement statement = DataBaseConnection.getConnection().prepareStatement(query);
+            statement.setString(1, usernameValue);
+
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                String storedPassword = resultSet.getString("password");
+                if (hashedPassword.equals(storedPassword)) {
+                    int userID = resultSet.getInt("user_ID");
+                    User.SetUserID(userID);
+                    System.out.println(userID);
+
+                    FXMLLoader loader = new FXMLLoader();
+                    loader.setLocation(getClass().getResource("hello-view.fxml"));
+                    Parent root = loader.load();
+
+                    HelloController controller = loader.getController();
+                    controller.SetHelloControllerData();
+                    Stage stage = (Stage)((Node) event.getSource()).getScene().getWindow();
+                    Scene scene = new Scene(root);
+                    stage.setScene(scene);
+                    stage.show();
+                } else {
+                    System.out.println("Incorrect password");
+                }
+            } else {
+                System.out.println("User not found");
+            }
+
+            resultSet.close();
+            statement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 
@@ -139,26 +157,30 @@ public class LoginController implements Initializable
     @FXML
     void register(MouseEvent event) throws SQLException, ClassNotFoundException {
         final String username = registerUsername.getText();
-        final int password = Integer.parseInt(registerPassword.getText());
+        final String password = registerPassword.getText();
         final String email = registerEmail.getText();
         final String firstName = registerFirstname.getText();
         final String lastName = registerLastName.getText();
         final String imagePath = registerImagePath.getText();
+        final int dollarAmount = Integer.parseInt(registerDollarAmount.getText());
 
-        System.out.println(username+" "+password+" "+email+" "+ firstName +" "+ lastName);
+        String hashedPassword = hashPassword(password);
+
+       System.out.println(username+" "+hashedPassword+" "+email+" "+ firstName +" "+ lastName);
     
-        String query = " insert into user (username, password, email, firstName, lastName,profileImagePath)"
-                + " values (?, ?, ?, ?, ?, ?)";
+        String query = " insert into user (username,password, email, firstName, lastName,profileImagePath,dollarAmount) "
+                + " values (?, ?, ?, ?, ?, ?,?) ";
 
-        PreparedStatement preparedStatement = connection.prepareStatement(query);
+        PreparedStatement preparedStatement = DataBaseConnection.getConnection().prepareStatement(query);
         preparedStatement.setString(1,username);
-        preparedStatement.setInt(2,password);
+        preparedStatement.setString(2,hashedPassword);
         preparedStatement.setString(3,email);
         preparedStatement.setString(4,firstName);
         preparedStatement.setString(5,lastName);
         preparedStatement.setString(6,imagePath);
+        preparedStatement.setInt(7,dollarAmount);
         preparedStatement.executeUpdate();
-        connection.close();
+        DataBaseConnection.getConnection().close();
 
         User.setUserName(username);
 
@@ -187,5 +209,21 @@ public class LoginController implements Initializable
             return false;
         }
         return true;
+    }
+
+    private static String hashPassword(String password) {
+        try {
+            MessageDigest digest = MessageDigest.getInstance("SHA-256");
+            byte[] hash = digest.digest(password.getBytes());
+            StringBuilder hexString = new StringBuilder();
+            for (byte b : hash) {
+                String hex = Integer.toHexString(0xff & b);
+                if (hex.length() == 1) hexString.append('0');
+                hexString.append(hex);
+            }
+            return hexString.toString();
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

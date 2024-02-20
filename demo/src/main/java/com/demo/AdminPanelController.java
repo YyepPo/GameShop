@@ -1,6 +1,7 @@
 package com.demo;
 
 import com.sun.javafx.image.impl.ByteIndexed;
+import com.sun.javafx.scene.SceneEventDispatcher;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
@@ -44,8 +45,8 @@ public class AdminPanelController {
     SideButtonsInfo SideButtonsInfo;
 
     @FXML
-    void OnAdminButtonPressed(MouseEvent event) {
-
+    void OnAdminButtonPressed(MouseEvent event) throws IOException {
+        SceneManager.LoadScene(event,getClass().getResource("admin-panel.fxml"));
     }
 
     @FXML
@@ -59,8 +60,8 @@ public class AdminPanelController {
     }
 
     @FXML
-    void OnManageUsersClicked(MouseEvent event) {
-
+    void OnManageUsersClicked(MouseEvent event) throws IOException {
+        SceneManager.LoadScene(event,getClass().getResource("ManageUsers.fxml"));
     }
 
     @FXML
