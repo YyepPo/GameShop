@@ -56,8 +56,6 @@ public class ProfileController implements Initializable {
     @FXML
     private GridPane friendGrid;
 
-
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         profileButton.setStyle("-fx-background-color: #4061A3");

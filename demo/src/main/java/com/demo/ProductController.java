@@ -153,7 +153,7 @@ public class ProductController implements Initializable {
         }
 
         //Check if user has enough coins to buy the game
-        if(User.GetAmount() < Double.valueOf(gamePrice.getText()))
+        if(User.GetDollarAmount(DataBaseConnection.getConnection()) < Double.valueOf(gamePrice.getText()))
         {
             System.out.println("User doesnt have enough money");
             return;

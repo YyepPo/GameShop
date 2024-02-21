@@ -59,16 +59,23 @@ public class ManageGamesController implements Initializable {
         while(set.next()) {
             final int ID = set.getInt(1);
             final String title = set.getString(2);
+            final String genre = set.getString("genre");
+            final int price = set.getInt("price");
+            final String releaseDate = set.getString("releaseDate");
+            final String description = set.getString("description");
+            final int ageRestriction = set.getInt("ageRestriction");
             final String image = set.getString(7);
-            AddGameCard(ID,title,image,allGameCards);
+            AddGameCard(ID,title,image,allGameCards,genre,price,releaseDate,description,ageRestriction);
         }
 
         return allGameCards;
     }
 
-    private void AddGameCard(final int ID,final String title,final String image,List<GameCard> cards)
+    private void AddGameCard(final int ID,final String title,final String image,List<GameCard> cards,
+                             final String genre,final int price,final String releaseDate,final String description,
+                             final int ageRestriction)
     {
-        GameCard gameCard = new GameCard(ID,title,image);
+        GameCard gameCard = new GameCard(ID,title,image,genre,price,releaseDate,description,ageRestriction);
         cards.add(gameCard);
     }
 

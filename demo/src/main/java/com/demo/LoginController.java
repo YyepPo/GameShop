@@ -77,37 +77,6 @@ public class LoginController implements Initializable
             return;
         }
 
-        /*String enteredPassword = password.getText();
-        String hashedEnteredPassword = hashPassword(enteredPassword);
-        System.out.println(hashedEnteredPassword);
-        ResultSet usernamePasswordResult = DataBaseConnection.getStatement().executeQuery("select * from user where username ="+"'"+username.getText()+"' and password="+hashedEnteredPassword);
-        if(usernamePasswordResult.next())
-        {
-            String hashedPasswordFromDatabase = usernamePasswordResult.getString("password");
-            if(usernamePasswordResult.getString(3).equals(hashedPasswordFromDatabase)  &&
-                usernamePasswordResult.getString(2).equals(username.getText()))
-            {
-                ResultSet set = DataBaseConnection.getStatement().executeQuery("select user_ID from user where username="+"'"+username.getText()+"'");
-                if(set.next())
-                {
-                    User.SetUserID(set.getInt(1));
-                    System.out.println(set.getInt(1));
-                }
-                //conn.close();
-                User.setUserName(username.getText());
-
-                FXMLLoader loader = new FXMLLoader();
-                loader.setLocation(getClass().getResource("hello-view.fxml"));
-                Parent root = loader.load();
-
-                HelloController controller = loader.getController();
-                controller.SetHelloControllerData();
-                Stage stage = (Stage)((Node) event.getSource()).getScene().getWindow();
-                Scene scene = new Scene(root);
-                stage.setScene(scene);
-                stage.show();
-            }
-        }*/
         try {
             String usernameValue = username.getText();
             String passwordValue = password.getText();
@@ -124,7 +93,8 @@ public class LoginController implements Initializable
                 if (hashedPassword.equals(storedPassword)) {
                     int userID = resultSet.getInt("user_ID");
                     User.SetUserID(userID);
-                    System.out.println(userID);
+                    User.setUserName(usernameValue);
+                    System.out.println("Users id is: "+userID);
 
                     FXMLLoader loader = new FXMLLoader();
                     loader.setLocation(getClass().getResource("hello-view.fxml"));
@@ -143,15 +113,9 @@ public class LoginController implements Initializable
                 System.out.println("User not found");
             }
 
-            resultSet.close();
-            statement.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
-    }
-
-    private void LoadHelloViewScene(MouseEvent event) throws IOException {
-
     }
 
     @FXML
@@ -180,7 +144,6 @@ public class LoginController implements Initializable
         preparedStatement.setString(6,imagePath);
         preparedStatement.setInt(7,dollarAmount);
         preparedStatement.executeUpdate();
-        DataBaseConnection.getConnection().close();
 
         User.setUserName(username);
 

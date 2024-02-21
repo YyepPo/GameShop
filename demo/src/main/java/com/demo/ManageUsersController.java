@@ -56,15 +56,22 @@ public class ManageUsersController  implements Initializable {
         while(set.next()) {
             final int Id = set.getInt(1);
             final String username = set.getString(2);
+            final String password = set.getString(3);
+            final String email = set.getString(4);
+            final String firstName = set.getString(5);
+            final String lastName = set.getString(6);
             final String image = set.getString(7);
-            AddUserCard(Id,username,image,allUserCards);
+            final int dollarAmount = set.getInt(8);
+            AddUserCard(Id,username,image,allUserCards,password,email,firstName,lastName,dollarAmount);
         }
         return allUserCards;
     }
 
-    private void AddUserCard(final int ID,final String username,final String image,List<UserCard> allUserCards)
+    private void AddUserCard(final int ID,final String username,final String image,List<UserCard> allUserCards,
+                             final String password,final String email,final String firstName,final String lastName,
+                             final int dollarAmount)
     {
-        UserCard userCard = new UserCard(ID,username,image);
+        UserCard userCard = new UserCard(ID,username,image,password,email,firstName,lastName,dollarAmount);
         allUserCards.add(userCard);
     }
 

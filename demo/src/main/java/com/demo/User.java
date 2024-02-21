@@ -34,13 +34,6 @@ public class User {
     public static int GetUserID() {return userID;}
     public static double GetAmount() {return amount;}
 
-    ///
-    ///Setters
-    ///
-    public static void setUserName(String newUserName) {userName = newUserName;}
-
-    public static void SetUserID(int newuserID) {userID = newuserID;}
-
     public static int GetDollarAmount(Connection conn)
     {
         int dollarAmount = 0;
@@ -59,6 +52,14 @@ public class User {
         }
         return 0;
     }
+    ///
+    ///Setters
+    ///
+    public static void setUserName(String newUserName) {userName = newUserName;}
+
+    public static void SetUserID(int newuserID) {userID = newuserID;}
+
+
 
     public static E_UserType IsAdmin(Connection conn)
     {
