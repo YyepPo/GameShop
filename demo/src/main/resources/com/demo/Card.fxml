@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="338.0" prefWidth="258.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.demo.CardController">
+<AnchorPane prefHeight="338.0" prefWidth="258.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.demo.Controllers.CardController">
    <children>
       <Button layoutX="-5.0" mnemonicParsing="false" onMousePressed="#productPressed" prefHeight="320.0" prefWidth="264.0" style="-fx-background-radius: 20; -fx-background-color: #212F4B;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="-6.0" AnchorPane.topAnchor="0.0">
          <graphic>

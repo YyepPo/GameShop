@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="150.0" prefWidth="264.0" style="-fx-background-color: #324772;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.demo.FriendCardController">
+<AnchorPane prefHeight="150.0" prefWidth="264.0" style="-fx-background-color: #324772;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.demo.Controllers.FriendCardController">
    <children>
       <HBox prefHeight="150.0" prefWidth="248.0">
          <children>

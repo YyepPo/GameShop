@@ -16,7 +16,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1642.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.demo.ProfileController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1642.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.demo.Controllers.ProfileController">
    <children>
       <BorderPane layoutX="47.0" layoutY="136.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <left>
@@ -119,11 +119,27 @@
                      <children>
                         <VBox prefHeight="200.0" prefWidth="1217.0">
                            <children>
-                              <Line endX="1237.666748046875" startX="2386.166748046875" stroke="WHITE" translateY="-10.0">
+                              <Label fx:id="usernameText" prefHeight="137.0" prefWidth="1176.0" text="Username" textFill="WHITE">
+                                 <font>
+                                    <Font size="43.0" />
+                                 </font>
+                                 <VBox.margin>
+                                    <Insets left="20.0" />
+                                 </VBox.margin>
+                              </Label>
+                              <Line endX="1736.3333740234375" startX="2879.166748046875" stroke="WHITE">
                                  <VBox.margin>
                                     <Insets left="20.0" />
                                  </VBox.margin>
                               </Line>
+                              <Label fx:id="gameNumberText" prefHeight="62.0" prefWidth="1173.0" text="Games:" textFill="WHITE">
+                                 <font>
+                                    <Font size="30.0" />
+                                 </font>
+                                 <VBox.margin>
+                                    <Insets left="20.0" />
+                                 </VBox.margin>
+                              </Label>
                            </children>
                         </VBox>
                      </children>

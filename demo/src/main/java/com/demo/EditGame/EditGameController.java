@@ -1,9 +1,7 @@
 package com.demo.EditGame;
 
 import com.demo.DataBaseConnection;
-import com.demo.GameCard;
 import com.demo.SceneManager;
-import com.demo.VideoGame;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
@@ -82,7 +80,7 @@ public class EditGameController {
     }
 
     @FXML
-    void OnUpdateGameClicked(MouseEvent event) throws SQLException {
+    void OnUpdateGameClicked(MouseEvent event) throws SQLException, IOException {
         if(InputFieldsValid())
         {
             String sql = "UPDATE game SET price = ?, description = ?,title = ?,releaseDate = ?,ageRestriction = ? WHERE game_ID = ?";
@@ -98,6 +96,7 @@ public class EditGameController {
             int rowsUpdated = statement.executeUpdate();
             if (rowsUpdated > 0) {
                 System.out.println("Update successful!");
+                SceneManager.LoadScene(event,getClass().getResource("../admin-panel.fxml"));
             } else {
                 System.out.println("No game found with that name.");
             }
@@ -131,8 +130,6 @@ public class EditGameController {
         }
         return true;
     }
-
-    private
 
     @FXML
     void OnAdminButtonPressed(MouseEvent event) throws IOException {

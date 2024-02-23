@@ -13,7 +13,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1642.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.demo.AdminPanelController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1642.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.demo.Controllers.AdminPanelController">
    <children>
       <BorderPane layoutX="47.0" layoutY="136.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <left>
@@ -112,30 +112,8 @@
          <center>
             <Pane prefHeight="800.0" prefWidth="998.0" style="-fx-background-color: #27334B;" BorderPane.alignment="CENTER">
                <children>
-                  <VBox layoutX="-1.0" layoutY="-5.0" prefHeight="124.0" prefWidth="1202.0">
+                  <VBox layoutY="93.0" prefHeight="709.0" prefWidth="1179.0">
                      <children>
-                        <VBox prefHeight="159.0" prefWidth="1202.0">
-                           <children>
-                              <Label prefHeight="112.0" prefWidth="1149.0" styleClass="text" stylesheets="@style.css" text="Admin Panel" textFill="WHITE">
-                                 <font>
-                                    <Font size="50.0" />
-                                 </font>
-                                 <VBox.margin>
-                                    <Insets left="20.0" />
-                                 </VBox.margin>
-                              </Label>
-                              <Line endX="1237.666748046875" startX="2386.166748046875" stroke="WHITE" translateY="-10.0">
-                                 <VBox.margin>
-                                    <Insets left="20.0" />
-                                 </VBox.margin>
-                              </Line>
-                           </children>
-                        </VBox>
-                     </children>
-                  </VBox>
-                  <VBox layoutX="-2.0" layoutY="106.0" prefHeight="693.0" prefWidth="1179.0">
-                     <children>
-                        <AnchorPane prefHeight="126.0" prefWidth="1179.0" />
                         <HBox prefHeight="155.0" prefWidth="1179.0">
                            <children>
                               <Pane prefHeight="155.0" prefWidth="71.0" />
@@ -159,6 +137,57 @@
                               <Pane layoutX="10.0" layoutY="10.0" prefHeight="155.0" prefWidth="79.0" />
                            </children>
                         </HBox>
+                        <AnchorPane layoutX="10.0" layoutY="291.0" prefHeight="100.0" prefWidth="1179.0" />
+                        <HBox layoutX="10.0" layoutY="391.0" prefHeight="155.0" prefWidth="1179.0">
+                           <children>
+                              <Pane prefHeight="155.0" prefWidth="71.0" />
+                              <Button contentDisplay="TOP" mnemonicParsing="false" onMouseClicked="#OnAddGameClicked" prefHeight="155.0" prefWidth="1050.0" style="-fx-background-radius: 29; -fx-background-color: #405A8E;" text="Add Game" textFill="WHITE">
+                                 <font>
+                                    <Font size="48.0" />
+                                 </font>
+                              </Button>
+                              <Pane layoutX="10.0" layoutY="10.0" prefHeight="155.0" prefWidth="79.0" />
+                           </children>
+                        </HBox>
+                        <AnchorPane layoutX="10.0" layoutY="480.0" prefHeight="100.0" prefWidth="1179.0" />
+                        <HBox layoutX="10.0" layoutY="564.0" prefHeight="155.0" prefWidth="1179.0">
+                           <children>
+                              <Pane prefHeight="155.0" prefWidth="71.0" />
+                              <Button contentDisplay="TOP" mnemonicParsing="false" onMouseClicked="#OnAddUserClicked" prefHeight="155.0" prefWidth="1050.0" style="-fx-background-radius: 29; -fx-background-color: #405A8E;" text="Add User" textFill="WHITE">
+                                 <font>
+                                    <Font size="48.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets bottom="10.0" />
+                                 </HBox.margin>
+                              </Button>
+                              <Pane layoutX="10.0" layoutY="10.0" prefHeight="155.0" prefWidth="79.0" />
+                           </children>
+                        </HBox>
+                     </children>
+                     <padding>
+                        <Insets top="20.0" />
+                     </padding>
+                  </VBox>
+                  <VBox layoutX="-1.0" layoutY="-5.0" prefHeight="124.0" prefWidth="1202.0">
+                     <children>
+                        <VBox prefHeight="159.0" prefWidth="1202.0">
+                           <children>
+                              <Label prefHeight="112.0" prefWidth="1149.0" styleClass="text" stylesheets="@style.css" text="Admin Panel" textFill="WHITE">
+                                 <font>
+                                    <Font size="50.0" />
+                                 </font>
+                                 <VBox.margin>
+                                    <Insets left="20.0" />
+                                 </VBox.margin>
+                              </Label>
+                              <Line endX="1237.666748046875" startX="2386.166748046875" stroke="WHITE" translateY="-10.0">
+                                 <VBox.margin>
+                                    <Insets left="20.0" />
+                                 </VBox.margin>
+                              </Line>
+                           </children>
+                        </VBox>
                      </children>
                   </VBox>
                </children>

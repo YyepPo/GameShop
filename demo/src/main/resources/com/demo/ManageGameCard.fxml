@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="305.0" prefWidth="1085.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.demo.ManageGameCard">
+<AnchorPane prefHeight="305.0" prefWidth="1085.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.demo.EditGame.ManageGameCard">
    <children>
       <HBox prefHeight="306.0" prefWidth="1101.0">
          <children>
