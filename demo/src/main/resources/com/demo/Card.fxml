@@ -17,7 +17,7 @@
                <children>
                   <ImageView id="gameImg" fx:id="gameImg" fitHeight="231.0" fitWidth="248.0" pickOnBounds="true">
                      <image>
-                        <Image url="@../../images/Icons/New%20Project.jpg" />
+                        <Image url="@../../images/Witcher%203/stefan-s-fight-5.jpg" />
                      </image>
                   </ImageView>
                   <Label id="gameName" fx:id="gameName" prefHeight="56.0" prefWidth="295.0" style="-fx-background-color: whi;" styleClass="text" stylesheets="@style.css" text="Game Name" textFill="WHITE">

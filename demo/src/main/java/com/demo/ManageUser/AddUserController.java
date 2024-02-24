@@ -168,4 +168,9 @@ public class AddUserController {
     void OnProfileButtonPressed(MouseEvent event) throws IOException {
         SceneManager.LoadScene(event,getClass().getResource("../profile.fxml"));
     }
+    @FXML
+    void OnFriendButtonPressed(MouseEvent event) throws IOException
+    {
+        SceneManager.LoadScene(event,getClass().getResource("../Friend.fxml"));
+    }
 }

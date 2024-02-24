@@ -39,6 +39,8 @@ public class ProfileController implements Initializable {
 
     @FXML
     private Button profileButton;
+    @FXML
+    private Button adminButton;
 
     @FXML
     private HBox profileHBox;
@@ -64,6 +66,9 @@ public class ProfileController implements Initializable {
     int gameCounter = 0;
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        E_UserType userRole = User.IsAdmin(DataBaseConnection.getConnection());
+        adminButton.setVisible(userRole == E_UserType.Admin);
+
         usernameText.setText(User.getUserName());
 
         profileButton.setStyle("-fx-background-color: #4061A3");
@@ -129,6 +134,8 @@ public class ProfileController implements Initializable {
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -153,7 +160,6 @@ public class ProfileController implements Initializable {
                 final int memory = set.getInt(10);
                 final String graphicsCard = set.getString(11);
                 final int storage = set.getInt(12);
-                final String cpu = set.getString(16);
 
                 final String ss1 = set.getString(13);
                 final String ss2 = set.getString(14);
@@ -166,7 +172,7 @@ public class ProfileController implements Initializable {
 
                 AddGameCard(gameID,gameTitle,img,description
                         ,gamePrice,gameGenre,screenshots,16,
-                        operatingSystem,cpu,memory,graphicsCard,
+                        operatingSystem,memory,graphicsCard,
                         releaseDate,storage, baseGames);
             }
         }
@@ -175,11 +181,11 @@ public class ProfileController implements Initializable {
     }
 
         private void AddGameCard(int id, String name, String gameImg, String gameDesc, double gamePrice, String gameType,
-                             ArrayList<String> screenShots, int ageRestriction, String operationSystem, String processor,
+                             ArrayList<String> screenShots, int ageRestriction, String operationSystem,
                              int memory, String graphicsCard, String gameReleaseDate, int storage, List<VideoGame> gameCards
     )
     {
-        VideoGame game = new VideoGame(id,name,gameImg,gameDesc,gamePrice,gameType,screenShots,ageRestriction,operationSystem,processor,
+        VideoGame game = new VideoGame(id,name,gameImg,gameDesc,gamePrice,gameType,screenShots,ageRestriction,operationSystem,
                 memory,graphicsCard,storage,gameReleaseDate);
         game.SetImgSrc(gameImg);
         gameCards.add(game);
@@ -190,12 +196,16 @@ public class ProfileController implements Initializable {
     {
         SceneManager.LoadScene(event,getClass().getResource("../Friend.fxml"));
     }
-
     @FXML
     void OnHomeButtonPressed(MouseEvent event) throws IOException {
 
         Test.SetIsInProfilePage(false);
         SceneManager.LoadScene(event,getClass().getResource("../hello-view.fxml"));
+    }
+
+    @FXML
+    void OnAdminButtonPressed(MouseEvent event) throws IOException {
+        SceneManager.LoadScene(event,getClass().getResource("../admin-panel.fxml"));
     }
 
 }

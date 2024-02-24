@@ -2,6 +2,7 @@ package com.demo.Friend;
 
 import com.demo.Controllers.FriendCardController;
 import com.demo.DataBaseConnection;
+import com.demo.E_UserType;
 import com.demo.SceneManager;
 import com.demo.ManageUser.User;
 import javafx.fxml.FXML;
@@ -9,6 +10,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
@@ -61,14 +63,25 @@ public class FriendController implements Initializable {
     @FXML
     private Line profileLine;
 
+    @FXML
+    private Label usernameText;
+
     private ArrayList<Integer> friendIDs = new ArrayList<>();
     private ArrayList<Friend> friends = new ArrayList<>();
+
+    @FXML
+    private Button adminButton;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle)
     {
+        E_UserType userRole = User.IsAdmin(DataBaseConnection.getConnection());
+        adminButton.setVisible(userRole == E_UserType.Admin);
+
         int column = 0;
         int row = 1;
+
+        usernameText.setText(User.getUserName());
 
         //Find and retrieve the user IDs of friends for a
         //given username from a database, employing JOIN operations and PreparedStatement for
@@ -166,26 +179,28 @@ public class FriendController implements Initializable {
         }
     }
 
-    @FXML
-    void OnFriendButtonPressed(MouseEvent event)
-    {
-
-    }
-
-    @FXML
-    void OnHomeButtonPressed(MouseEvent event) throws IOException {
-        SceneManager.LoadScene(event,getClass().getResource("../hello-view.fxml"));
-    }
-
-    @FXML
-    void OnProfileButtonPressed(MouseEvent event) throws IOException {
-        SceneManager.LoadScene(event,getClass().getResource("../profile.fxml"));
-    }
-
     private void AddFriendToGrid(int id,String name,String imagePath,ArrayList<Friend> allFriends)
     {
         Friend friend = new Friend(id,name,imagePath);
         allFriends.add(friend);
     }
+
+    @FXML
+    void OnFriendButtonPressed(MouseEvent event) throws IOException {
+        SceneManager.LoadScene(event,getClass().getResource("../Friend.fxml"));
+    }
+    @FXML
+    void OnHomeButtonPressed(MouseEvent event) throws IOException {
+        SceneManager.LoadScene(event,getClass().getResource("../hello-view.fxml"));
+    }
+    @FXML
+    void OnProfileButtonPressed(MouseEvent event) throws IOException {
+        SceneManager.LoadScene(event,getClass().getResource("../profile.fxml"));
+    }
+    @FXML
+    void OnAdminButtonPressed(MouseEvent event) throws IOException {
+        SceneManager.LoadScene(event,getClass().getResource("../admin-panel.fxml"));
+    }
+
 
 }

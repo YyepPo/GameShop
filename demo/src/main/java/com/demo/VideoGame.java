@@ -22,13 +22,12 @@ public class VideoGame extends  BaseGame{
     SystemRequirement systemRequirement = new SystemRequirement();
 
     public VideoGame(int gameID,String name, String gameImg, String gameDesc, double gamePrice, String gameType, ArrayList<String> screenShots,
-                     int ageRestriction, String operationSystem, String processor, int memory, String graphicsCard, int storage,String gameReleaseDate
+                     int ageRestriction, String operationSystem,  int memory, String graphicsCard, int storage,String gameReleaseDate
                      ) {
         super(gameID,name, gameImg, gameDesc, gamePrice, gameType, screenShots, gameReleaseDate);
         this.ageRestriction = ageRestriction;
 
         systemRequirement.operationSystem = operationSystem;
-        systemRequirement.processor = processor;
         systemRequirement.memory = memory;
         systemRequirement.graphicsCard = graphicsCard;
         systemRequirement.storage = storage;

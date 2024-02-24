@@ -77,6 +77,35 @@
                         </HBox>
                      </graphic>
                   </Button>
+                  <Button id="#no-colorr" fx:id="friendButton" mnemonicParsing="false" onMousePressed="#OnFriendButtonPressed" prefHeight="146.0" prefWidth="455.0" style="-fx-background-color: #212F4B;" stylesheets="@style.css" textFill="#ffffff00">
+                     <graphic>
+                        <HBox fx:id="friendHBox" prefHeight="92.0" prefWidth="317.0" style="-fx-background-color: #212F4B;">
+                           <children>
+                              <Line fx:id="fiendLine" endX="100.0" startX="100.0" startY="133.0" stroke="WHITE" strokeWidth="5.0" visible="false">
+                                 <HBox.margin>
+                                    <Insets left="-5.0" />
+                                 </HBox.margin>
+                              </Line>
+                              <ImageView fitHeight="72.0" fitWidth="72.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" translateX="35.0" translateY="35.0">
+                                 <image>
+                                    <Image url="@../../images/Icons/icons8-user-menu-male-100.png" />
+                                 </image>
+                                 <HBox.margin>
+                                    <Insets />
+                                 </HBox.margin>
+                              </ImageView>
+                              <Label prefHeight="165.0" prefWidth="213.0" style="-fx-font: Jura;" styleClass="text" stylesheets="@style.css" text="Friends" textFill="WHITE">
+                                 <font>
+                                    <Font size="53.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets left="50.0" top="20.0" />
+                                 </HBox.margin>
+                              </Label>
+                           </children>
+                        </HBox>
+                     </graphic>
+                  </Button>
                   <Button id="#no-colorr" fx:id="adminButton" layoutX="10.0" layoutY="156.0" mnemonicParsing="false" onMousePressed="#OnAdminButtonPressed" prefHeight="146.0" prefWidth="455.0" style="-fx-background-color: #212F4B;" stylesheets="@style.css" textFill="#ffffff00">
                      <graphic>
                         <HBox fx:id="profileHBox1" prefHeight="92.0" prefWidth="317.0" style="-fx-background-color: #212F4B;">

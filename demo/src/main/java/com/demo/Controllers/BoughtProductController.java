@@ -1,8 +1,7 @@
 package com.demo.Controllers;
 
-import com.demo.BaseGame;
-import com.demo.SceneManager;
-import com.demo.Test;
+import com.demo.*;
+import com.demo.ManageUser.User;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -11,6 +10,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
@@ -90,14 +90,16 @@ public class BoughtProductController implements Initializable {
     @FXML
     private Label card;
 
-    //private SceneManager sceneManager;
+    @FXML
+    private Button adminButton;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
+        E_UserType userRole = User.IsAdmin(DataBaseConnection.getConnection());
+        adminButton.setVisible(userRole == E_UserType.Admin);
     }
-    public void InitializeBoughtProductData(int id,String name, String price, String releaseDate, String gameDescription,
-                                            ArrayList<String> screenshots,int ageRestrcition,String cpu,int ram,int storage,String card)
+    public void InitializeBoughtProductData(int id,String name, String price, String releaseDate, String gameDescription,String cpu,
+                                            ArrayList<String> screenshots,int ageRestrcition,int ram,int storage,String card)
     {
         gameID = id;
         gameName.setText(name);
@@ -105,19 +107,22 @@ public class BoughtProductController implements Initializable {
         release.setText(releaseDate);
         description.setText(gameDescription);
         this.ageRestriction.setText(String.valueOf(ageRestrcition));
-        this.cpu.setText(cpu);
         this.ram.setText(String.valueOf(ram) + "GB");
         this.storage.setText(String.valueOf(storage) + "GB");
         this.card.setText(card);
+        this.cpu.setText(cpu);
 
-        /*Image img1 = new Image(screenshots.get(0));
+        Image logo = new Image(screenshots.get(3));
+        img.setImage(logo);
+
+        Image img1 = new Image(screenshots.get(0));
         ss1.setImage(img1);
 
         Image img2 = new Image(screenshots.get(1));
         ss2.setImage(img2);
 
         Image img3 = new Image(screenshots.get(2));
-        ss3.setImage(img3);*/
+        ss3.setImage(img3);
     }
 
     @FXML
@@ -132,6 +137,15 @@ public class BoughtProductController implements Initializable {
         //Load profile.fxml scene
         Test.SetIsInProfilePage(true);
         SceneManager.LoadScene(event,getClass().getResource("../profile.fxml"));
+    }
+    @FXML
+    void OnFriendButtonPressed(MouseEvent event) throws IOException
+    {
+        SceneManager.LoadScene(event,getClass().getResource("../Friend.fxml"));
+    }
+    @FXML
+    void OnAdminButtonPressed(MouseEvent event) throws IOException {
+        SceneManager.LoadScene(event,getClass().getResource("../admin-panel.fxml"));
     }
 
     @FXML

@@ -80,10 +80,21 @@ public class AddGameController {
     private TextField releaseDateText;
 
     @FXML
+    private TextField ss1;
+
+    @FXML
+    private TextField ss2;
+
+    @FXML
+    private TextField ss3;
+
+    int gameID = 16;
+
+    @FXML
     void OnAddGameClicked(MouseEvent event) throws SQLException {
         if(!AreInputFieldValid()) {return;}
 
-        String sql = "INSERT INTO game (title, genre, price, releaseDate,description,gameImg,ageRestriction,operatingSystem,memory,graphicsCard,gameStorage,CPU) VALUES (?, ?, ?, ?,?,?,?,?,?,?,?,?)";
+        String sql = "INSERT INTO game (title, genre, price, releaseDate,description,gameImg,ageRestriction,screenshot1,screenshot2,screenshot3) VALUES (?, ?, ?, ?,?,?,?,?,?,?)";
         PreparedStatement preparedStatement = DataBaseConnection.getConnection().prepareStatement(sql);
         preparedStatement.setString(1,gameNameText.getText());
         preparedStatement.setString(2,genreText.getText());
@@ -92,14 +103,25 @@ public class AddGameController {
         preparedStatement.setString(5,descriptionText.getText());
         preparedStatement.setString(6, gameImageText.getText());
         preparedStatement.setInt(7,Integer.parseInt(ageRestriction.getText()));
-        preparedStatement.setString(8,operatingSystemText.getText());
-        preparedStatement.setInt(9,Integer.parseInt(memoryText.getText()));
-        preparedStatement.setString(10,graphicsCardText.getText());
-        preparedStatement.setInt(11,Integer.parseInt(gameStorageText.getText()));
-        preparedStatement.setString(12, cpuText.getText());
+        preparedStatement.setString(8, ss1.getText());
+        preparedStatement.setString(9, ss2.getText());
+        preparedStatement.setString(10, ss3.getText());
 
         int rowsInserted = preparedStatement.executeUpdate();
+
         if (rowsInserted > 0) {
+            String insertIntoGameSystemSql = "Insert into game_system_requirements(operatingSystem,memory,graphicsCard,gameStorage,cpu) values(?,?,?,?,?)";
+            PreparedStatement statement = DataBaseConnection.getConnection().prepareStatement(insertIntoGameSystemSql);
+            statement.setString(1,operatingSystemText.getText());
+            statement.setInt(2,Integer.parseInt(memoryText.getText()));
+            statement.setString(3, graphicsCardText.getText());
+            statement.setInt(4,Integer.parseInt(gameStorageText.getText()));
+            statement.setString(5, cpuText.getText());
+            int rowsInsertedIntoGameSystem = statement.executeUpdate();
+            if(rowsInsertedIntoGameSystem > 0)
+            {
+                JOptionPane.showMessageDialog(null,"qweqwe");
+            }
             System.out.println("A new row has been inserted.");
         }
 
@@ -125,14 +147,17 @@ public class AddGameController {
     void OnAdminButtonPressed(MouseEvent event) throws IOException {
         SceneManager.LoadScene(event,getClass().getResource("../admin-panel.fxml"));
     }
-
     @FXML
     void OnHomeButtonPressed(MouseEvent event) throws IOException {
         SceneManager.LoadScene(event,getClass().getResource("../hello-view.fxml"));
     }
-
     @FXML
     void OnProfileButtonPressed(MouseEvent event) throws IOException {
         SceneManager.LoadScene(event,getClass().getResource("../profile.fxml"));
+    }
+    @FXML
+    void OnFriendButtonPressed(MouseEvent event) throws IOException
+    {
+        SceneManager.LoadScene(event,getClass().getResource("../Friend.fxml"));
     }
 }

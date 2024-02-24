@@ -71,21 +71,4 @@ public class BaseGame {
     {
         return Math.max(min, Math.min(max, value));
     }
-
-    public void AddScreenShot(String screenShotSrc)
-    {
-        //Check if the screenShot already exists
-        //If it does, don't add
-        if(!screenShotSrc.isEmpty())
-        {
-            for (String screenShot : screenShots) {
-                if (screenShot.equals(screenShotSrc)) {
-                    System.out.println("The screen shot " + screenShotSrc + " already exists");
-                    return;
-                }
-            }
-        }
-        screenShots.add(screenShotSrc);
-
-    }
 }

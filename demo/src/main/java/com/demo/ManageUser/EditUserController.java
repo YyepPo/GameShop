@@ -86,15 +86,17 @@ public class EditUserController {
     void OnAdminButtonPressed(MouseEvent event) throws IOException {
         SceneManager.LoadScene(event,getClass().getResource("../admin-panel.fxml"));
     }
-
     @FXML
     void OnHomeButtonPressed(MouseEvent event) throws IOException {
         SceneManager.LoadScene(event,getClass().getResource("../hello-view.fxml"));
     }
-
     @FXML
     void OnProfileButtonPressed(MouseEvent event) throws IOException {
         SceneManager.LoadScene(event,getClass().getResource("../profile.fxml"));
     }
-
+    @FXML
+    void OnFriendButtonPressed(MouseEvent event) throws IOException
+    {
+        SceneManager.LoadScene(event,getClass().getResource("../Friend.fxml"));
+    }
 }

@@ -1,6 +1,7 @@
 package com.demo.Controllers;
 
 import com.demo.DataBaseConnection;
+import com.demo.E_UserType;
 import com.demo.ManageUser.User;
 import com.demo.SceneManager;
 import com.demo.Test;
@@ -10,12 +11,15 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.shape.Line;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 
+import javax.swing.*;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
@@ -88,13 +92,19 @@ public class ProductController implements Initializable {
     @FXML
     private Label card;
 
+    @FXML
+    private Button adminButton;
+
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-                usersDollarAmount.setText(String.valueOf(User.GetDollarAmount(DataBaseConnection.getConnection())));
+        usersDollarAmount.setText(String.valueOf(User.GetDollarAmount(DataBaseConnection.getConnection())));
+
+        E_UserType userRole = User.IsAdmin(DataBaseConnection.getConnection());
+        adminButton.setVisible(userRole == E_UserType.Admin);
     }
-    public void InitializeData(int id,String name, String price, String releaseDate, String gameDescription,
-                               ArrayList<String> screenshots,int ageRestrcition,String cpu,int ram,int storage,String card)
-    {
+    public void InitializeData(int id,String name, String price, String releaseDate, String gameDescription,String cpu,
+                               ArrayList<String> screenshots,int ageRestrcition,int ram,int storage,String card) throws SQLException {
         gameID = id;
         gameName.setText(name);
         gamePrice.setText(price);
@@ -102,38 +112,29 @@ public class ProductController implements Initializable {
         description.setText(gameDescription);
         this.bFromProfile = bFromProfile;
         this.ageRestriction.setText(String.valueOf(ageRestrcition));
-        this.cpu.setText(cpu);
-        this.ram.setText(String.valueOf(ram) + "GB");
-        this.storage.setText(String.valueOf(storage) + "GB");
-        this.card.setText(card);
-        /*Image img1 = new Image(screenshots.get(0));
+
+        String sql = "select * from game_system_requirements where game_ID = " + gameID;
+        JOptionPane.showMessageDialog(null,String.valueOf(gameID));
+        ResultSet set = DataBaseConnection.getStatement().executeQuery(sql);
+        if(set.next())
+        {
+            this.cpu.setText(set.getString("cpu"));
+            this.storage.setText(set.getString("gameStorage"));
+            this.ram.setText(set.getString("memory"));
+            this.card.setText(set.getString("graphicsCard"));
+        }
+
+        Image logo = new Image(screenshots.get(3));
+        img.setImage(logo);
+
+        Image img1 = new Image(screenshots.get(0));
         ss1.setImage(img1);
 
         Image img2 = new Image(screenshots.get(1));
         ss2.setImage(img2);
 
         Image img3 = new Image(screenshots.get(2));
-        ss3.setImage(img3);*/
-    }
-
-    private Stage stage;
-    private Scene scene;
-    private Parent root;
-
-    @FXML
-    void OnHomeButtonPressed(MouseEvent event) throws IOException {
-        //Load home page
-        Test.SetIsInProfilePage(false);
-        SceneManager.LoadScene(event,getClass().getResource("../hello-view.fxml"));
-    }
-
-    @FXML
-    void OnProfileButtonPressed(MouseEvent event) throws IOException {
-        Test.SetIsInProfilePage(true);
-
-        //Load profile.fxml scene
-        SceneManager sceneManager = SceneManager.getInstance();
-        sceneManager.LoadScene(event,getClass().getResource("../profile.fxml"));
+        ss3.setImage(img3);
     }
 
     @FXML
@@ -147,7 +148,8 @@ public class ProductController implements Initializable {
         ResultSet set = DataBaseConnection.getStatement().executeQuery(query);
         if(set.next())
         {
-            System.out.println("Player already owns the game");
+            JOptionPane.showMessageDialog(null,"");
+
             return;
         }
 
@@ -176,4 +178,30 @@ public class ProductController implements Initializable {
         preparedStatement.setInt(2,gameID);
         preparedStatement.executeUpdate();
     }
+
+    @FXML
+    void OnHomeButtonPressed(MouseEvent event) throws IOException {
+        //Load home page
+        Test.SetIsInProfilePage(false);
+        SceneManager.LoadScene(event,getClass().getResource("../hello-view.fxml"));
+    }
+    @FXML
+    void OnProfileButtonPressed(MouseEvent event) throws IOException {
+        Test.SetIsInProfilePage(true);
+
+        //Load profile.fxml scene
+        SceneManager sceneManager = SceneManager.getInstance();
+        sceneManager.LoadScene(event,getClass().getResource("../profile.fxml"));
+    }
+    @FXML
+    void OnFriendButtonPressed(MouseEvent event) throws IOException
+    {
+        SceneManager.LoadScene(event,getClass().getResource("../Friend.fxml"));
+    }
+    @FXML
+    void OnAdminButtonPressed(MouseEvent event) throws IOException {
+        SceneManager.LoadScene(event,getClass().getResource("../admin-panel.fxml"));
+    }
+
+
 }

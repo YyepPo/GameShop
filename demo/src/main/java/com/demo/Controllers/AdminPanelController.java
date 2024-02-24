@@ -77,4 +77,9 @@ public class AdminPanelController {
     void OnAddUserClicked(MouseEvent event) throws IOException {
         SceneManager.LoadScene(event,getClass().getResource("../EditUser/AddUser.fxml"));
     }
+
+    @FXML
+    void OnFriendButtonPressed(MouseEvent event) throws IOException {
+        SceneManager.LoadScene(event,getClass().getResource("../Friend.fxml"));
+    }
 }

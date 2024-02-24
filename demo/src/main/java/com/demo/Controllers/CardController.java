@@ -1,6 +1,7 @@
 package com.demo.Controllers;
 
 import com.demo.*;
+import com.mysql.cj.protocol.Resultset;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -16,6 +17,8 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
@@ -54,16 +57,10 @@ public class CardController implements Initializable {
 
     boolean bIsFromProfile;
 
-
-    public void SetData(VideoGame game, boolean bIsFromProfile)
-    {
+    public void SetData(VideoGame game, boolean bIsFromProfile) throws SQLException {
         this.game = game;
-        InputStream is = getClass().getResourceAsStream("..\\..\\images\\Icons\\New Project.jpg");
-        if(is != null)
-        {
-            Image img = new Image(is);
-            gameImg.setImage(img);
-        }
+        Image img = new Image(game.GetGameImg());
+        gameImg.setImage(img);
         gameID = game.GetGameID();
         gameName.setText(game.GetGameName());
         String priceToString = Double.toString(game.GetGamePrice());
@@ -71,17 +68,25 @@ public class CardController implements Initializable {
         gameReleaseDate = game.GetGameReleaseDate();
         gameDescription = game.GetGameDesc();
         screenshots = game.GetScreenShots();
+        screenshots.add(game.GetGameImg());
         AgeRestriction = game.GetAgeRestriction();
-        Cpu = game.GetSystemRequirement().processor;
-        Ram = game.GetSystemRequirement().memory;
-        Storage = game.GetSystemRequirement().storage;
-        Card = game.GetSystemRequirement().graphicsCard;
+
         this.bIsFromProfile = bIsFromProfile;
+
+        String sql = "Select * from game_system_requirements where game_ID = " + game.GetGameID();
+        ResultSet resultSet = DataBaseConnection.getStatement().executeQuery(sql);
+
+        if(resultSet.next())
+        {
+            Cpu = resultSet.getString("cpu");
+            Ram = resultSet.getInt("memory");
+            Storage = resultSet.getInt("gameStorage");
+            Card = resultSet.getString("graphicsCard");
+        }
     }
 
     @FXML
-    void productPressed(MouseEvent event) throws IOException
-    {
+    void productPressed(MouseEvent event) throws IOException, SQLException {
         Stage stage;
         Scene scene;
         Parent root;
@@ -98,7 +103,7 @@ public class CardController implements Initializable {
 
             BoughtProductController boughtProductController = load.getController();
             boughtProductController.InitializeBoughtProductData(gameID,gameName.getText(),
-                    gamePrice.getText(),gameReleaseDate,gameDescription,screenshots,AgeRestriction,Cpu,Ram,Storage,Card);
+                    gamePrice.getText(),gameReleaseDate,gameDescription,Cpu,screenshots,AgeRestriction,Ram,Storage,Card);
 
         }
         else
@@ -109,7 +114,7 @@ public class CardController implements Initializable {
 
             ProductController productController = load.getController();
             productController.InitializeData(gameID,gameName.getText(),
-                    gamePrice.getText(),gameReleaseDate,gameDescription,screenshots,AgeRestriction,Cpu,Ram,Storage,Card);
+                    gamePrice.getText(),gameReleaseDate,gameDescription,Cpu,screenshots,AgeRestriction,Ram,Storage,Card);
 
         }
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();

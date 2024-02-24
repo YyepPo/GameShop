@@ -36,7 +36,7 @@ public class ManageUsersController  implements Initializable {
         try {
             for (UserCard user : userCards) {
                 FXMLLoader fxmlLoader = new FXMLLoader();
-                fxmlLoader.setLocation(getClass().getResource("EditUser.fxml"));
+                fxmlLoader.setLocation(getClass().getResource("../EditUser.fxml"));
 
                 AnchorPane pane = fxmlLoader.load();
 
