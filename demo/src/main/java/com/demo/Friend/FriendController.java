@@ -152,8 +152,9 @@ public class FriendController implements Initializable {
             {
                 int id = set.getInt("user_ID");
                 String name = set.getString("username");
+                String imgPath = set.getString("profileImagePath");
 
-                AddFriendToGrid(id,name,"",allFriends);
+                AddFriendToGrid(id,name,imgPath,allFriends);
             }
         }
         return allFriends;

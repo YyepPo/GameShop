@@ -3,6 +3,7 @@ package com.demo.Controllers;
 import com.demo.Friend.Friend;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 public class FriendCardController {
@@ -19,5 +20,7 @@ public class FriendCardController {
     {
         this.friend = friend;
         friendName.setText(friend.GetFriendName());
+        //Image img = new Image(this.friend.GetFriendImagePath());
+        //friendImage.setImage(img);
     }
 }

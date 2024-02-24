@@ -2,6 +2,7 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
@@ -11,7 +12,6 @@
    <children>
       <HBox prefHeight="150.0" prefWidth="248.0">
          <children>
-            <ImageView fx:id="friendImage" fitHeight="150.0" fitWidth="129.0" pickOnBounds="true" />
             <Label fx:id="friendName" prefHeight="152.0" prefWidth="223.0" text="FriendName" textFill="WHITE">
                <font>
                   <Font name="Jura Book" size="55.0" />
@@ -20,6 +20,11 @@
                   <Insets left="20.0" />
                </HBox.margin>
             </Label>
+            <ImageView fx:id="friendImage" fitHeight="150.0" fitWidth="129.0" pickOnBounds="true">
+               <image>
+                  <Image url="@../../images/Users/images.png" />
+               </image>
+            </ImageView>
          </children>
       </HBox>
    </children>

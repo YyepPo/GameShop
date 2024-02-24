@@ -117,6 +117,56 @@ public class HelloController implements Initializable {
     public void SetHelloControllerData()
     {
         //profileName.setText(User.getUserName());
+        E_UserType userRole = User.IsAdmin(DataBaseConnection.getConnection());
+
+        adminButton.setVisible(userRole == E_UserType.Admin);
+
+        homeButton.setStyle("-fx-background-color: #4061A3");
+        homeHBox.setStyle("-fx-background-color: #4061A3");
+
+        homeLine.setVisible(true);
+        profileLine.setVisible(false);
+
+        try {
+            games = new ArrayList<VideoGame>(GetGames());
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        int column = 0;
+        int row = 1;
+
+        for(int i = 0;i<games.size();i++)
+        {
+            gameCounter++;
+        }
+
+        gameCardNumber.setText("Games: " + Integer.toString(gameCounter));
+        try {
+            for (VideoGame game : games) {
+                FXMLLoader fxmlLoader = new FXMLLoader();
+                fxmlLoader.setLocation(getClass().getResource("../Card.fxml"));
+
+                AnchorPane pane = fxmlLoader.load();
+
+                CardController cardController = fxmlLoader.getController();
+                cardController.SetData(game,false);
+
+                //If in a row there are 5 columns than go to the next row and set its column number to 0
+                if(column == 3)
+                {
+                    column = 0;
+                    row++;
+                }
+
+                gameGrid.add(pane,column++,row);
+                GridPane.setMargin(pane,new Insets(20));
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     //Get game's properties from data base

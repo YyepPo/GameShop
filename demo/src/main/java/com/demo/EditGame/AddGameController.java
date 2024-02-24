@@ -1,13 +1,20 @@
 package com.demo.EditGame;
 
+import com.demo.Controllers.BoughtProductController;
+import com.demo.Controllers.HelloController;
 import com.demo.DataBaseConnection;
 import com.demo.SceneManager;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.shape.Line;
+import javafx.stage.Stage;
 
 import javax.swing.*;
 import java.io.IOException;
@@ -91,7 +98,7 @@ public class AddGameController {
     int gameID = 16;
 
     @FXML
-    void OnAddGameClicked(MouseEvent event) throws SQLException {
+    void OnAddGameClicked(MouseEvent event) throws SQLException, IOException {
         if(!AreInputFieldValid()) {return;}
 
         String sql = "INSERT INTO game (title, genre, price, releaseDate,description,gameImg,ageRestriction,screenshot1,screenshot2,screenshot3) VALUES (?, ?, ?, ?,?,?,?,?,?,?)";
@@ -120,9 +127,11 @@ public class AddGameController {
             int rowsInsertedIntoGameSystem = statement.executeUpdate();
             if(rowsInsertedIntoGameSystem > 0)
             {
-                JOptionPane.showMessageDialog(null,"qweqwe");
+                JOptionPane.showMessageDialog(null,gameNameText.getText() + " has been added successfully");
+                SceneManager.LoadScene(event,getClass().getResource("../admin-panel.fxml"));
             }
             System.out.println("A new row has been inserted.");
+
         }
 
     }
